@@ -1,0 +1,29 @@
+<svg width="176" height="54" viewBox="0 0 176 54" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Devlino</title>
+  <desc id="desc">A rounded multicolor Devlino logo mark with a clean wordmark.</desc>
+  <defs>
+    <linearGradient id="markGradient" x1="4" y1="4" x2="48" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4285F4"/>
+      <stop offset="0.38" stop-color="#34A853"/>
+      <stop offset="0.68" stop-color="#FBBC04"/>
+      <stop offset="1" stop-color="#EA4335"/>
+    </linearGradient>
+    <linearGradient id="wordUnderline" x1="58" y1="42" x2="161" y2="42" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4285F4"/>
+      <stop offset="0.35" stop-color="#34A853"/>
+      <stop offset="0.68" stop-color="#FBBC04"/>
+      <stop offset="1" stop-color="#EA4335"/>
+    </linearGradient>
+    <filter id="softShadow" x="-6" y="-2" width="66" height="66" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#3C4043" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <g filter="url(#softShadow)">
+    <rect x="5" y="5" width="44" height="44" rx="15" fill="url(#markGradient)"/>
+    <rect x="10" y="10" width="34" height="34" rx="11" fill="#FFFFFF"/>
+    <path d="M20 17H27.5C33.7 17 37.8 20.9 37.8 27C37.8 33.1 33.7 37 27.5 37H20V17ZM27.2 31.9C30.3 31.9 32.2 30 32.2 27C32.2 24 30.3 22.1 27.2 22.1H25.4V31.9H27.2Z" fill="#202124"/>
+    <path d="M14.5 41.5H39.5" stroke="#34A853" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+  </g>
+  <text x="59" y="32.5" fill="#202124" font-family="Inter, Google Sans, Segoe UI, Arial, sans-serif" font-size="24" font-weight="760">Devlino</text>
+  <path d="M60 42H158" stroke="url(#wordUnderline)" stroke-width="4" stroke-linecap="round"/>
+</svg>
