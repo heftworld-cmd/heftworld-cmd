@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Damn Vulnerable Chrome Extension is a hands-on local training lab for learning browser extension security issues.">
+  <meta name="theme-color" content="#f4f4f2">
+  <link rel="icon" href="../assets/devlino-logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/article-page.css">
+  <title>Damn Vulnerable Chrome Extension | Devlino</title>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header" aria-label="Site header">
+      <div class="topbar">
+        <a class="logo" href="../index.html" aria-label="Devlino home">
+          <img class="logo-image" src="../assets/devlino-logo.svg" alt="Devlino">
+        </a>
+        <a class="contact-button" href="mailto:heftworld@gmail.com">Contact</a>
+      </div>
+
+      <section class="header-profile" aria-labelledby="site-focus">
+        <div class="avatar" role="img" aria-label="Devlino profile photo">
+          <img src="../assets/profile.png" alt="Portrait of Devlino" loading="eager" decoding="async">
+        </div>
+        <div class="header-copy">
+          <h1 id="site-focus">Cyber Security,<br>AI Automation and Curiosity</h1>
+          <p>Exploring defensive security, practical automation, AI workflows, and the questions that make better systems.</p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <article class="article-shell">
+        <a class="back-link" href="../index.html">Back to home</a>
+        <p class="article-meta">Project</p>
+        <h2>Damn Vulnerable Chrome Extension</h2>
+        <div class="article-body">
+          <p>Started off by complaining about an enterprise browser security platform blocking my browsing... and ended up discovering something unexpected: its debug console could be brute-forced to bypass certain security controls.</p>
+
+          <p>That curiosity pulled me into browser extension security best practices and made me realize beginners need a simple, hands-on way to learn this space.</p>
+
+          <p>So I built <strong>Damn Vulnerable Chrome Extension (DVCE)</strong> in a few hours, shoutout to Codex, as a deliberately vulnerable extension to practice identifying and fixing real-world security issues.</p>
+
+          <p>Sure, tools can generate code and even spot bugs, but understanding the flaws is where the real learning happens.</p>
+
+          <div class="artifact-link">
+            <h3>Project repository</h3>
+            <p><a href="https://github.com/heftworld-cmd/Damn-Vunerable-Chrome-Extension" target="_blank" rel="noopener noreferrer">Open Damn Vulnerable Chrome Extension on GitHub</a></p>
+          </div>
+
+          <h3>What DVCE is</h3>
+          <p>DVCE is a local-only training lab for teaching common Chrome extension vulnerability patterns. It is intentionally insecure so learners can understand how extension vulnerabilities work and how to fix them.</p>
+
+          <h3>What it teaches</h3>
+          <ul>
+            <li>Unsafe <code>window.postMessage</code> bridges from web pages into extension logic.</li>
+            <li>Cross-origin iframe abuse when <code>event.source</code> and <code>event.origin</code> are not validated.</li>
+            <li>DOM injection from content scripts using unsafe sinks like <code>innerHTML</code>.</li>
+            <li>How <code>web_accessible_resources</code> can expose packaged extension data.</li>
+            <li>Why excessive permissions increase blast radius when another bug exists.</li>
+            <li>Insecure storage of secrets in extension storage.</li>
+            <li>Remote configuration becoming a command channel.</li>
+            <li>HTML injection in privileged extension pages.</li>
+            <li>CSP, supply-chain, update, and privacy risks around browser extensions.</li>
+          </ul>
+
+          <h3>How the lab works</h3>
+          <p>The lab models a pattern that appears in real extensions: a local web page sends messages, a content script bridges them into the extension, and a service worker performs privileged actions such as tabs, scripting, storage, or configuration behavior.</p>
+
+          <p>DVCE has two modes: vulnerable mode, where unsafe behavior is intentionally allowed, and fixed mode, where basic checks demonstrate mitigation patterns such as sender validation and command allowlisting.</p>
+
+          <h3>Why I built it</h3>
+          <p>Browser extensions sit in a strange and powerful place: they touch web pages, extension pages, storage, permissions, and sometimes enterprise policy. For a beginner, that can feel abstract until they can see one small flaw become a privileged action.</p>
+
+          <p>DVCE makes that learning loop concrete: trigger the bug, observe the impact, switch to fixed mode, and understand which control changed the outcome.</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <span>Devlino</span>
+      <span>Cyber security, AI automation, and curious systems</span>
+    </footer>
+  </div>
+</body>
+</html>

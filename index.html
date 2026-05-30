@@ -4,25 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Devlino on cyber security, AI automation, and curiosity.">
-  <meta name="theme-color" content="#f5f5f5">
+  <meta name="theme-color" content="#f4f4f2">
   <link rel="icon" href="assets/devlino-logo.svg" type="image/svg+xml">
   <title>Devlino | Cyber Security, AI Automation and Curiosity</title>
   <style>
     :root {
       color-scheme: light;
-      --bg: #f5f5f5;
+      --bg: #f4f4f2;
       --paper: #ffffff;
-      --ink: #202124;
-      --muted: #5f6368;
-      --line: #dcdcdc;
-      --blue: #4285f4;
-      --red: #ea4335;
-      --yellow: #fbbc04;
-      --green: #34a853;
+      --ink: #111111;
+      --muted: #585858;
+      --line: #d8d8d8;
+      --blue: #111111;
+      --red: #3f3f3f;
+      --yellow: #777777;
+      --green: #bcbcbc;
       --radius-xl: 28px;
       --radius-lg: 22px;
-      --shadow: 0 16px 38px rgba(60, 64, 67, 0.12), 0 3px 10px rgba(60, 64, 67, 0.08);
-      --shadow-soft: 0 10px 24px rgba(60, 64, 67, 0.1), 0 2px 7px rgba(60, 64, 67, 0.07);
+      --shadow: 0 16px 38px rgba(17, 17, 17, 0.12), 0 3px 10px rgba(17, 17, 17, 0.08);
+      --shadow-soft: 0 10px 24px rgba(17, 17, 17, 0.1), 0 2px 7px rgba(17, 17, 17, 0.07);
       --max: 1120px;
     }
 
@@ -40,9 +40,10 @@
       min-height: 100vh;
       overflow-x: hidden;
       background:
-        radial-gradient(circle at 12% 18%, rgba(66, 133, 244, 0.08), transparent 25%),
-        radial-gradient(circle at 86% 24%, rgba(251, 188, 4, 0.12), transparent 26%),
-        radial-gradient(circle at 62% 88%, rgba(52, 168, 83, 0.1), transparent 28%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(226, 226, 222, 0.54)),
+        radial-gradient(circle at 12% 18%, rgba(17, 17, 17, 0.045), transparent 25%),
+        radial-gradient(circle at 86% 24%, rgba(17, 17, 17, 0.035), transparent 26%),
+        radial-gradient(circle at 62% 88%, rgba(17, 17, 17, 0.04), transparent 28%),
         var(--bg);
       color: var(--ink);
       font-family: Inter, "Google Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -100,7 +101,7 @@
       border: 0;
       border-radius: 50%;
       padding: 5px;
-      background: conic-gradient(from 220deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+      background: #111111;
       box-shadow: var(--shadow-soft);
       overflow: hidden;
     }
@@ -113,6 +114,7 @@
       background: #fff url("assets/profile.png") center 34% / cover no-repeat;
       box-sizing: border-box;
       content: "";
+      filter: grayscale(1) contrast(1.05);
       z-index: 1;
     }
 
@@ -134,6 +136,7 @@
       height: 100%;
       border: 4px solid #fff;
       border-radius: inherit;
+      filter: grayscale(1) contrast(1.05);
       object-fit: cover;
       object-position: center 34%;
     }
@@ -149,15 +152,15 @@
       padding: 0 28px;
       background: var(--paper);
       box-shadow: var(--shadow-soft);
-      color: #202124;
+      color: var(--ink);
       font-size: 1.04rem;
       font-weight: 720;
       transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 220ms ease, border-color 220ms ease;
     }
 
     .contact-button:hover {
-      border-color: rgba(66, 133, 244, 0.35);
-      box-shadow: 0 18px 42px rgba(66, 133, 244, 0.16), 0 4px 12px rgba(60, 64, 67, 0.08);
+      border-color: rgba(17, 17, 17, 0.35);
+      box-shadow: 0 18px 42px rgba(17, 17, 17, 0.14), 0 4px 12px rgba(17, 17, 17, 0.08);
       transform: translateY(-3px) scale(1.02);
     }
 
@@ -184,7 +187,7 @@
 
     h1 {
       margin-bottom: 18px;
-      color: #202124;
+      color: var(--ink);
       font-size: clamp(2.4rem, 6vw, 4.8rem);
       font-weight: 780;
       letter-spacing: 0;
@@ -217,7 +220,7 @@
       min-height: var(--h, 240px);
       display: flex;
       flex-direction: column;
-      border: 1px solid rgba(220, 220, 220, 0.9);
+      border: 1px solid rgba(216, 216, 216, 0.95);
       border-radius: var(--radius-xl);
       background: rgba(255, 255, 255, 0.88);
       box-shadow: var(--shadow-soft);
@@ -244,14 +247,14 @@
       border-radius: inherit;
       background:
         linear-gradient(135deg, rgba(255, 255, 255, 0.72), transparent 42%),
-        radial-gradient(circle at 12% 10%, rgba(66, 133, 244, 0.12), transparent 24%);
+        radial-gradient(circle at 12% 10%, rgba(17, 17, 17, 0.08), transparent 24%);
       content: "";
       pointer-events: none;
     }
 
     .card:hover,
     .card:focus-visible {
-      border-color: rgba(66, 133, 244, 0.38);
+      border-color: rgba(17, 17, 17, 0.36);
       background: #fff;
       box-shadow: var(--shadow);
       transform:
@@ -297,13 +300,13 @@
       height: 8px;
       flex: 0 0 auto;
       border-radius: 50%;
-      background: var(--accent, var(--blue));
+      background: var(--accent, var(--ink));
       content: "";
     }
 
     h2,
     h3 {
-      color: #202124;
+      color: var(--ink);
       font-weight: 760;
       letter-spacing: 0;
       line-height: 1.08;
@@ -330,7 +333,7 @@
       align-items: center;
       gap: 8px;
       margin-top: auto;
-      color: #1a73e8;
+      color: var(--ink);
       font-weight: 760;
     }
 
@@ -348,80 +351,43 @@
       z-index: 1;
       height: 138px;
       margin: 12px 12px 0;
-      border: 1px solid rgba(220, 220, 220, 0.72);
+      border: 1px solid rgba(216, 216, 216, 0.82);
       border-radius: 22px;
       overflow: hidden;
-      background: #f8fafd;
+      background: #f7f7f5;
     }
 
-    .thumb.search {
+    .thumb.extension {
       background:
-        radial-gradient(circle at 22% 30%, var(--blue) 0 10%, transparent 11%),
-        radial-gradient(circle at 78% 34%, var(--red) 0 9%, transparent 10%),
-        radial-gradient(circle at 36% 76%, var(--yellow) 0 12%, transparent 13%),
-        radial-gradient(circle at 75% 72%, var(--green) 0 11%, transparent 12%),
-        linear-gradient(135deg, #ffffff, #eef3fb);
+        linear-gradient(#fff 0 44px, transparent 44px),
+        linear-gradient(135deg, rgba(17, 17, 17, 0.07), rgba(17, 17, 17, 0.02)),
+        #fbfbfa;
     }
 
-    .thumb.search::after {
+    .thumb.extension::before {
       position: absolute;
-      left: 28px;
+      left: 22px;
+      right: 22px;
+      top: 18px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(17, 17, 17, 0.12);
+      box-shadow: 0 42px 0 rgba(17, 17, 17, 0.16), 0 72px 0 rgba(17, 17, 17, 0.1);
+      content: "";
+    }
+
+    .thumb.extension::after {
+      position: absolute;
       right: 28px;
-      top: 56px;
-      height: 32px;
-      border: 1px solid rgba(220, 220, 220, 0.9);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.84);
-      box-shadow: 0 8px 18px rgba(60, 64, 67, 0.08);
-      content: "";
-    }
-
-    .thumb.tiles {
-      background:
-        linear-gradient(135deg, rgba(66, 133, 244, 0.12), rgba(52, 168, 83, 0.1)),
-        #fff;
-    }
-
-    .thumb.tiles::before,
-    .thumb.tiles::after {
-      position: absolute;
-      border: 1px solid rgba(220, 220, 220, 0.92);
-      border-radius: 18px;
-      background: #fff;
-      box-shadow: 0 10px 24px rgba(60, 64, 67, 0.08);
-      content: "";
-    }
-
-    .thumb.tiles::before {
-      inset: 24px auto auto 28px;
-      width: 86px;
-      height: 70px;
-    }
-
-    .thumb.tiles::after {
-      right: 30px;
       bottom: 24px;
-      width: 108px;
-      height: 78px;
-    }
-
-    .thumb.calendar {
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(216, 216, 216, 0.95);
+      border-radius: 18px;
       background:
-        linear-gradient(#fff 0 54px, transparent 54px),
-        linear-gradient(90deg, rgba(66, 133, 244, 0.16) 1px, transparent 1px),
-        linear-gradient(rgba(60, 64, 67, 0.1) 1px, transparent 1px),
-        #fbfcff;
-      background-size: auto, 46px 46px, 46px 46px, auto;
-    }
-
-    .thumb.calendar::before {
-      position: absolute;
-      inset: 18px auto auto 22px;
-      width: 84px;
-      height: 16px;
-      border-radius: 999px;
-      background: var(--red);
-      box-shadow: 114px 0 0 var(--yellow), 228px 0 0 var(--green);
+        radial-gradient(circle at 50% 50%, #fff 0 28%, transparent 29%),
+        conic-gradient(from 220deg, #111111, #555555, #d0d0d0, #777777, #111111);
+      box-shadow: 0 12px 26px rgba(17, 17, 17, 0.12);
       content: "";
     }
 
@@ -437,25 +403,25 @@
     .mini-row span {
       display: block;
       height: 38px;
-      border: 1px solid rgba(220, 220, 220, 0.82);
+      border: 1px solid rgba(216, 216, 216, 0.88);
       border-radius: 16px;
-      background: #f8fafd;
+      background: #f7f7f5;
     }
 
     .mini-row span:nth-child(1) {
-      background: rgba(66, 133, 244, 0.14);
+      background: rgba(17, 17, 17, 0.12);
     }
 
     .mini-row span:nth-child(2) {
-      background: rgba(234, 67, 53, 0.12);
+      background: rgba(17, 17, 17, 0.08);
     }
 
     .mini-row span:nth-child(3) {
-      background: rgba(251, 188, 4, 0.18);
+      background: rgba(17, 17, 17, 0.16);
     }
 
     .mini-row span:nth-child(4) {
-      background: rgba(52, 168, 83, 0.14);
+      background: rgba(17, 17, 17, 0.05);
     }
 
     .card.feature {
@@ -481,7 +447,7 @@
       --tx: 4px;
       --ty: 18px;
       --d: 80ms;
-      --accent: var(--blue);
+      --accent: #111111;
     }
 
     .card.two {
@@ -491,67 +457,17 @@
       --tx: -8px;
       --ty: 0px;
       --d: 170ms;
-      --accent: var(--green);
-    }
-
-    .card.three {
-      grid-column: 9 / span 4;
-      --r: 6deg;
-      --hr: 0.9deg;
-      --tx: -2px;
-      --ty: 52px;
-      --d: 250ms;
-      --accent: var(--yellow);
-    }
-
-    .card.four {
-      grid-column: 1 / span 5;
-      --r: 4deg;
-      --hr: 0.7deg;
-      --tx: 12px;
-      --ty: 34px;
-      --d: 340ms;
-      --accent: var(--red);
-    }
-
-    .card.five {
-      grid-column: 6 / span 3;
-      --r: -6deg;
-      --hr: -1deg;
-      --tx: -4px;
-      --ty: -8px;
-      --d: 430ms;
-      --accent: var(--blue);
-    }
-
-    .card.six {
-      grid-column: 9 / span 4;
-      --r: -4deg;
-      --hr: -0.7deg;
-      --tx: 0px;
-      --ty: 14px;
-      --d: 520ms;
-      --accent: var(--green);
+      --accent: #444444;
     }
 
     .card.seven {
-      grid-column: 2 / span 6;
-      --r: -3deg;
-      --hr: -0.5deg;
-      --tx: 0px;
-      --ty: 26px;
-      --d: 610ms;
-      --accent: var(--yellow);
-    }
-
-    .card.eight {
-      grid-column: 8 / span 4;
+      grid-column: 9 / span 4;
       --r: 5deg;
       --hr: 0.8deg;
-      --tx: 8px;
-      --ty: -12px;
-      --d: 700ms;
-      --accent: var(--red);
+      --tx: -2px;
+      --ty: 42px;
+      --d: 260ms;
+      --accent: #777777;
     }
 
     .footer {
@@ -562,88 +478,6 @@
       padding-top: 28px;
       color: var(--muted);
       font-size: 0.94rem;
-    }
-
-    .reader {
-      width: min(680px, calc(100% - 32px));
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      padding: 0;
-      background: rgba(255, 255, 255, 0.96);
-      box-shadow: 0 28px 80px rgba(60, 64, 67, 0.24), 0 8px 20px rgba(60, 64, 67, 0.1);
-      color: var(--ink);
-      overflow: hidden;
-    }
-
-    .reader::backdrop {
-      background: rgba(245, 245, 245, 0.72);
-      backdrop-filter: blur(10px);
-    }
-
-    .reader-inner {
-      padding: 30px;
-    }
-
-    .reader-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 26px;
-    }
-
-    .reader-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 7px 12px;
-      background: var(--bg);
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 740;
-    }
-
-    .reader-label::before {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--blue);
-      content: "";
-    }
-
-    .reader-close {
-      display: inline-flex;
-      width: 42px;
-      height: 42px;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--line);
-      border-radius: 50%;
-      background: #fff;
-      color: var(--muted);
-      cursor: pointer;
-      font: inherit;
-      font-size: 1.3rem;
-      line-height: 1;
-      transition: transform 180ms ease, box-shadow 180ms ease;
-    }
-
-    .reader-close:hover {
-      box-shadow: var(--shadow-soft);
-      transform: translateY(-2px);
-    }
-
-    .reader h2 {
-      margin-bottom: 18px;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-    }
-
-    .reader p {
-      margin-bottom: 0;
-      color: var(--muted);
-      font-size: 1.08rem;
     }
 
     @keyframes floatIn {
@@ -803,7 +637,7 @@
         <a class="logo" href="index.html" aria-label="Devlino home">
           <img class="logo-image" src="assets/devlino-logo.svg" alt="Devlino">
         </a>
-        <a class="contact-button" href="mailto:hello@devlino.com">Contact</a>
+        <a class="contact-button" href="mailto:heftworld@gmail.com">Contact</a>
       </div>
 
       <section class="header-profile" aria-labelledby="intro-title">
@@ -819,68 +653,30 @@
 
     <main>
       <section class="board" aria-label="Featured articles and projects">
-        <a class="card feature one" href="articles/designing-with-clarity.html" data-label="Article" data-title="Designing with clarity before decoration" data-body="A short essay on building interfaces that feel calm, quick to scan, and useful from the first click. This draft explores hierarchy, restraint, whitespace, and the small decisions that make a page feel effortless.">
+        <a class="card feature one" href="articles/bugcrowd-ai-slop.html" data-label="Article" data-title="Pretix SSRF in 1 Hour: Why Bugcrowd Is Fighting AI Slop" data-body="A field note on an LLM-assisted Pretix SSRF finding, why verified reports still matter, and why platforms are pushing back against unverified AI-generated submissions.">
           <div class="card-content">
             <span class="meta">Article</span>
-            <h2>Designing with clarity before decoration</h2>
-            <p>A short essay on building interfaces that feel calm, quick to scan, and useful from the first click.</p>
+            <h2>Pretix SSRF in 1 Hour</h2>
+            <p>Why Bugcrowd is fighting AI Slop, and what my LLM-assisted finding taught me.</p>
             <span class="open-link">Read article</span>
           </div>
         </a>
 
-        <a class="card tall two" href="projects/search-notes.html" data-modal="true" data-label="Project" data-title="Search Notes" data-body="A small knowledge tool shaped around fast capture, clean retrieval, and minimal friction. The case study focuses on search behavior, note density, and reducing the distance between an idea and its future use.">
-          <div class="thumb search" aria-hidden="true"></div>
+        <a class="card tall two" href="projects/damn-vulnerable-chrome-extension.html" data-label="Project" data-title="Damn Vulnerable Chrome Extension" data-body="A deliberately vulnerable local Chrome extension lab for learning extension security issues hands-on.">
+          <div class="thumb extension" aria-hidden="true"></div>
           <div class="card-content">
             <span class="meta">Project</span>
-            <h3>Search Notes</h3>
-            <p>A small knowledge tool shaped around fast capture, clean retrieval, and minimal friction.</p>
-            <span class="open-link">View project</span>
+            <h3>Damn Vulnerable Chrome Extension</h3>
+            <p>A hands-on local lab for learning Chrome extension security flaws and fixes.</p>
+            <span class="open-link">Read project</span>
           </div>
         </a>
 
-        <a class="card small three" href="articles/creative-systems.html" data-label="Article" data-title="Creative systems that stay simple" data-body="Notes on keeping expressive work organized without turning it into process theater. The article looks at simple rituals, naming, archives, and lightweight constraints.">
+        <a class="card wide seven" href="articles/ai-agents-security-architecture-review.html" data-label="Article" data-title="AI Agents as Security Review Peers" data-body="A reflection on AI agents as peer reviewers for agentic AI security architecture, with a link to sample SecOps Agent artifacts.">
           <div class="card-content">
             <span class="meta">Article</span>
-            <h3>Creative systems that stay simple</h3>
-            <p>Notes on keeping expressive work organized without turning it into process theater.</p>
-            <span class="open-link">Read</span>
-          </div>
-        </a>
-
-        <a class="card wide four" href="projects/quiet-dashboard.html" data-modal="true" data-label="Project" data-title="Quiet Dashboard" data-body="A focused workspace concept with generous spacing, calm states, and deliberate hierarchy. The project explores how operational software can feel useful without becoming visually heavy.">
-          <div class="thumb tiles" aria-hidden="true"></div>
-          <div class="card-content">
-            <span class="meta">Project</span>
-            <h3>Quiet Dashboard</h3>
-            <p>A focused workspace concept with generous spacing, calm states, and deliberate hierarchy.</p>
-            <span class="open-link">Open case study</span>
-          </div>
-        </a>
-
-        <a class="card small five" href="articles/shipping-light.html" data-label="Article" data-title="Shipping light" data-body="How constraints, taste, and speed can produce better personal projects. A practical note on finishing work before it grows into a system nobody asked for.">
-          <div class="card-content">
-            <span class="meta">Article</span>
-            <h3>Shipping light</h3>
-            <p>How constraints, taste, and speed can produce better personal projects.</p>
-            <span class="open-link">Read</span>
-          </div>
-        </a>
-
-        <a class="card tall six" href="projects/planner.html" data-modal="true" data-label="Project" data-title="Weekly Planner" data-body="A soft, tactile planner interface for prioritizing work without clutter. The concept uses card-like surfaces, plain language, and calm motion to support repeated weekly planning.">
-          <div class="thumb calendar" aria-hidden="true"></div>
-          <div class="card-content">
-            <span class="meta">Project</span>
-            <h3>Weekly Planner</h3>
-            <p>A soft, tactile planner interface for prioritizing work without clutter.</p>
-            <span class="open-link">View project</span>
-          </div>
-        </a>
-
-        <a class="card wide seven" href="articles/portfolio-as-garden.html" data-label="Article" data-title="Portfolio as a garden, not a museum" data-body="A personal site can stay alive by mixing finished work, rough notes, and thoughtful experiments. This article treats the portfolio as a living surface rather than a frozen gallery.">
-          <div class="card-content">
-            <span class="meta">Article</span>
-            <h2>Portfolio as a garden, not a museum</h2>
-            <p>A personal site can stay alive by mixing finished work, rough notes, and thoughtful experiments.</p>
+            <h2>AI Agents as Security Review Peers</h2>
+            <p>How agentic tools can challenge architecture reviews, with sample SecOps Agent artifacts.</p>
             <div class="mini-row" aria-hidden="true">
               <span></span>
               <span></span>
@@ -890,27 +686,7 @@
             <span class="open-link">Read article</span>
           </div>
         </a>
-
-        <a class="card small eight" href="projects/motion-cards.html" data-modal="true" data-label="Project" data-title="Motion Cards" data-body="Magnetic paper-note interactions for a more tactile browsing experience. The project uses small movement, gentle depth, and staggered entrances to add personality without clutter.">
-          <div class="card-content">
-            <span class="meta">Project</span>
-            <h3>Motion Cards</h3>
-            <p>Magnetic paper-note interactions for a more tactile browsing experience.</p>
-            <span class="open-link">Explore</span>
-          </div>
-        </a>
       </section>
-
-      <dialog class="reader" id="reader" aria-labelledby="reader-title">
-        <div class="reader-inner">
-          <div class="reader-top">
-            <span class="reader-label" id="reader-label">Article</span>
-            <button class="reader-close" type="button" aria-label="Close">x</button>
-          </div>
-          <h2 id="reader-title">Title</h2>
-          <p id="reader-body">Body</p>
-        </div>
-      </dialog>
     </main>
 
     <footer class="footer">
@@ -921,26 +697,6 @@
 
   <script>
     const cards = document.querySelectorAll(".card");
-    const modalCards = document.querySelectorAll(".card[data-modal='true']");
-    const reader = document.querySelector("#reader");
-    const readerLabel = document.querySelector("#reader-label");
-    const readerTitle = document.querySelector("#reader-title");
-    const readerBody = document.querySelector("#reader-body");
-    const readerClose = document.querySelector(".reader-close");
-
-    modalCards.forEach((card) => {
-      card.addEventListener("click", (event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-          return;
-        }
-
-        event.preventDefault();
-        readerLabel.textContent = card.dataset.label;
-        readerTitle.textContent = card.dataset.title;
-        readerBody.textContent = card.dataset.body;
-        reader.showModal();
-      });
-    });
 
     cards.forEach((card) => {
       let frame = null;
@@ -972,14 +728,6 @@
         card.style.setProperty("--mx", "0px");
         card.style.setProperty("--my", "0px");
       });
-    });
-
-    readerClose.addEventListener("click", () => reader.close());
-
-    reader.addEventListener("click", (event) => {
-      if (event.target === reader) {
-        reader.close();
-      }
     });
 
     window.addEventListener("pointermove", (event) => {
