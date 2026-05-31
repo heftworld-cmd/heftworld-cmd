@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Devlino on cyber security, AI automation, and curiosity.">
   <meta name="theme-color" content="#f4f4f2">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none';">
   <link rel="icon" href="assets/devlino-logo.svg" type="image/svg+xml">
   <title>Devlino | Cyber Security, AI Automation and Curiosity</title>
   <style>
@@ -695,51 +696,6 @@
     </footer>
   </div>
 
-  <script>
-    const cards = document.querySelectorAll(".card");
-
-    cards.forEach((card) => {
-      let frame = null;
-
-      card.addEventListener("pointermove", (event) => {
-        if (window.matchMedia("(max-width: 680px)").matches) {
-          return;
-        }
-
-        if (frame) {
-          cancelAnimationFrame(frame);
-        }
-
-        frame = requestAnimationFrame(() => {
-          const bounds = card.getBoundingClientRect();
-          const x = event.clientX - bounds.left;
-          const y = event.clientY - bounds.top;
-          const centerX = bounds.width / 2;
-          const centerY = bounds.height / 2;
-          const moveX = ((x - centerX) / centerX) * 10;
-          const moveY = ((y - centerY) / centerY) * 10;
-
-          card.style.setProperty("--mx", `${moveX}px`);
-          card.style.setProperty("--my", `${moveY}px`);
-        });
-      });
-
-      card.addEventListener("pointerleave", () => {
-        card.style.setProperty("--mx", "0px");
-        card.style.setProperty("--my", "0px");
-      });
-    });
-
-    window.addEventListener("pointermove", (event) => {
-      if (window.matchMedia("(max-width: 680px)").matches) {
-        return;
-      }
-
-      const x = (event.clientX / window.innerWidth - 0.5) * 14;
-      const y = (event.clientY / window.innerHeight - 0.5) * 14;
-      document.documentElement.style.setProperty("--parallax-x", `${x}px`);
-      document.documentElement.style.setProperty("--parallax-y", `${y}px`);
-    }, { passive: true });
-  </script>
+  <script src="assets/site.js" defer></script>
 </body>
 </html>
