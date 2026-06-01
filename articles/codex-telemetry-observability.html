@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A practical walkthrough of capturing Codex Desktop telemetry locally, what gets logged, what does not, and what security teams should know before treating it as an audit trail.">
+  <meta name="theme-color" content="#f4f4f2">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none';">
+  <link rel="icon" href="../assets/devlino-logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/article-page.css">
+  <title>Making Codex Observable: Sending Codex Telemetry to OpenTelemetry, Loki, and Grafana | Devlino</title>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header" aria-label="Site header">
+      <div class="topbar">
+        <a class="logo" href="../index.html" aria-label="Devlino home">
+          <img class="logo-image" src="../assets/devlino-logo.svg" alt="Devlino">
+        </a>
+        <a class="contact-button" href="mailto:heftworld@gmail.com">Contact</a>
+      </div>
+
+      <section class="header-profile" aria-labelledby="site-focus">
+        <div class="avatar" role="img" aria-label="Devlino profile photo">
+          <img src="../assets/profile.png" alt="Portrait of Devlino" loading="eager" decoding="async">
+        </div>
+        <div class="header-copy">
+          <h1 id="site-focus">Cyber Security,<br>AI Automation and Curiosity</h1>
+          <p>Exploring defensive security, practical automation, AI workflows, and the questions that make better systems.</p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <article class="article-shell">
+        <a class="back-link" href="../index.html">Back to home</a>
+        <p class="article-meta">Article &middot; <time datetime="2026-06-01">June 1, 2026</time></p>
+        <h2>Making Codex Observable: Sending Codex Telemetry to OpenTelemetry, Loki, and Grafana</h2>
+        <div class="article-body">
+          <p>AI coding agents are becoming part of daily engineering workflows. They read files, suggest changes, run commands, edit code, and sometimes interact with external systems. That makes observability important.</p>
+
+          <p>For traditional software, we usually ask:</p>
+          <ul>
+            <li>What ran?</li>
+            <li>When did it run?</li>
+            <li>Did it succeed?</li>
+            <li>What changed?</li>
+            <li>Who approved it?</li>
+            <li>What output did it produce?</li>
+          </ul>
+
+          <p>The same questions now apply to AI coding agents.</p>
+
+          <p>This post walks through a practical local setup for sending Codex Desktop telemetry into OpenTelemetry Collector, storing it in Grafana Loki, and viewing it in Grafana. It also explains what we actually observed in the logs, what did not show up, and how to think about the security implications.</p>
+
+          <p>The setup and observations in this post are based on hands-on testing and the official OpenAI Codex documentation, especially the <a href="https://developers.openai.com/codex/config-advanced#observability-and-telemetry" target="_blank" rel="noopener noreferrer">Codex advanced configuration documentation</a> and the <a href="https://developers.openai.com/codex/config-reference" target="_blank" rel="noopener noreferrer">Codex configuration reference</a>.</p>
+
+          <h3>Architecture</h3>
+          <p>The local telemetry flow is simple:</p>
+          <pre><code>Codex Desktop
+  -&gt; OpenTelemetry Collector
+  -&gt; Grafana Loki
+  -&gt; Grafana</code></pre>
+
+          <p>Each component has a clear role:</p>
+          <ul>
+            <li><strong>Codex Desktop</strong> emits telemetry events.</li>
+            <li><strong>OpenTelemetry Collector</strong> receives Codex telemetry over OTLP HTTP.</li>
+            <li><strong>Loki</strong> stores the logs.</li>
+            <li><strong>Grafana</strong> provides the UI to search and inspect events.</li>
+          </ul>
+
+          <p>This is useful for local testing, proof-of-concept work, and understanding what Codex emits before sending telemetry to a production SIEM.</p>
+
+          <h3>Why This Matters</h3>
+          <p>Codex can perform tool-mediated actions such as:</p>
+          <ul>
+            <li>Running shell commands</li>
+            <li>Editing files</li>
+            <li>Applying patches</li>
+            <li>Reading local workspace context</li>
+            <li>Calling local helper tools</li>
+            <li>Using MCP or app-provided capabilities</li>
+          </ul>
+
+          <p>Without telemetry, these actions are hard to audit after the fact.</p>
+
+          <p>With OpenTelemetry enabled, we can start answering questions like:</p>
+          <ul>
+            <li>Which tool did Codex call?</li>
+            <li>What arguments were passed?</li>
+            <li>Was the action approved automatically or manually?</li>
+            <li>Did the tool succeed or fail?</li>
+            <li>What output did the tool return?</li>
+            <li>Which conversation generated the event?</li>
+          </ul>
+
+          <p>That is a meaningful step toward AI agent governance.</p>
+
+          <h3>Local Docker Stack</h3>
+          <p>The local stack uses three main containers:</p>
+          <pre><code>otel-collector
+loki
+grafana</code></pre>
+
+          <p>We also added a small one-time helper container:</p>
+          <pre><code>loki-init</code></pre>
+
+          <p>The helper exists because recent Loki containers run as a non-root user. On Windows/Docker Desktop, the mounted Loki volume may initially be owned by a user that Loki cannot write as. The symptom looked like this:</p>
+          <pre><code>mkdir /tmp/loki/rules: permission denied</code></pre>
+
+          <p>The fix was to create the required Loki directories and set ownership before Loki starts:</p>
+          <pre><code>loki-init:
+  image: alpine:3.20
+  command: sh -c "mkdir -p /tmp/loki/chunks /tmp/loki/rules &amp;&amp; chown -R 10001:10001 /tmp/loki"
+  volumes:
+    - loki-data:/tmp/loki
+  restart: "no"</code></pre>
+
+          <p>Loki then depends on this one-time helper:</p>
+          <pre><code>loki:
+  image: grafana/loki:3.7.2
+  depends_on:
+    loki-init:
+      condition: service_completed_successfully</code></pre>
+
+          <p>This allows Loki to keep running as its normal non-root user instead of weakening the setup by running Loki as root.</p>
+
+          <h3>Codex Telemetry Configuration</h3>
+          <p>Codex was configured to send telemetry to the local OpenTelemetry Collector endpoint:</p>
+          <pre><code>[otel]
+log_user_prompt = true
+environment = "local"
+
+[otel.exporter.otlp-http]
+endpoint = "http://localhost:14318/v1/logs"
+protocol = "binary"</code></pre>
+
+          <p>The important settings are:</p>
+          <ul>
+            <li><code>environment = "local"</code> tags telemetry as local environment data.</li>
+            <li><code>log_user_prompt = true</code> allows prompt text to be included in telemetry.</li>
+            <li><code>endpoint = "http://localhost:14318/v1/logs"</code> points Codex to the local Collector.</li>
+            <li><code>protocol = "binary"</code> uses OTLP HTTP binary encoding.</li>
+          </ul>
+
+          <p>After changing Codex configuration, restart Codex so it loads the telemetry settings.</p>
+
+          <p>Reference: OpenAI documents Codex observability settings under the official <a href="https://developers.openai.com/codex/config-advanced#observability-and-telemetry" target="_blank" rel="noopener noreferrer">Codex advanced configuration documentation</a>. For broader configuration options, see the <a href="https://developers.openai.com/codex/config-reference" target="_blank" rel="noopener noreferrer">Codex configuration reference</a>.</p>
+
+          <h3>OpenTelemetry Collector Configuration</h3>
+          <p>The Collector receives logs from Codex and forwards them to Loki:</p>
+          <pre><code>receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+processors:
+  resource:
+    attributes:
+      - key: service.name
+        value: codex
+        action: upsert
+      - key: deployment.environment.name
+        value: local
+        action: upsert
+  batch:
+
+exporters:
+  otlp_http/loki:
+    endpoint: http://loki:3100/otlp
+  debug:
+    verbosity: basic
+
+service:
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [resource, batch]
+      exporters: [otlp_http/loki, debug]</code></pre>
+
+          <p>The <code>debug</code> exporter is useful during testing because it shows whether the Collector is receiving log records.</p>
+
+          <p>When things are working, Collector logs show messages like:</p>
+          <pre><code>Everything is ready. Begin running and processing data.</code></pre>
+
+          <p>and later:</p>
+          <pre><code>log records</code></pre>
+
+          <h3>Viewing Logs In Grafana</h3>
+          <p>Open Grafana:</p>
+          <pre><code>http://localhost:3000</code></pre>
+
+          <p>Go to:</p>
+          <pre><code>Explore -&gt; Loki</code></pre>
+
+          <p>Start with this basic query:</p>
+          <pre><code>{service_name="codex"}</code></pre>
+
+          <p>That confirms Codex logs are reaching Loki.</p>
+
+          <p>For tool results:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_result"</code></pre>
+
+          <p>For approval decisions:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_decision"</code></pre>
+
+          <p>To make tool results readable:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_result"
+| line_format "{{.event_timestamp}} tool={{.tool_name}} success={{.success}} args={{.arguments}} output={{.output}}"</code></pre>
+
+          <p>To make approval decisions readable:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_decision"
+| line_format "{{.event_timestamp}} tool={{.tool_name}} decision={{.decision}} source={{.source}}"</code></pre>
+
+          <p>One important detail: many useful values are stored as Loki structured metadata. The visible log body may look empty or minimal until you expand the log row or use <code>line_format</code>.</p>
+
+          <h3>What We Observed</h3>
+          <p>The Codex logs included events such as:</p>
+          <pre><code>codex.websocket_event
+codex.sse_event
+codex.tool_decision
+codex.tool_result</code></pre>
+
+          <p>These event names align with the OpenAI Codex observability documentation, which describes Codex OpenTelemetry log events for conversations, API requests, streaming events, user prompts, tool decisions, and tool results.</p>
+
+          <p>Streaming response events looked like:</p>
+          <pre><code>codex.websocket_event response.output_text.delta</code></pre>
+
+          <p>These represent chunks of assistant response text being streamed to the UI.</p>
+
+          <p>The most useful audit events were:</p>
+          <pre><code>codex.tool_decision
+codex.tool_result</code></pre>
+
+          <p>For shell commands, <code>codex.tool_result</code> included rich details such as:</p>
+          <ul>
+            <li>Tool name</li>
+            <li>Command arguments</li>
+            <li>Working directory</li>
+            <li>Timeout</li>
+            <li>Sandbox or escalation settings</li>
+            <li>Approval justification</li>
+            <li>Success or failure</li>
+            <li>Duration</li>
+            <li>Output</li>
+          </ul>
+
+          <p>For example, a harmless test command such as:</p>
+          <pre><code>Get-Date</code></pre>
+
+          <p>appeared in telemetry with the command, working directory, success status, and output.</p>
+
+          <h3>Tools Observed In Loki</h3>
+          <p>During testing, these tool names appeared under <code>codex.tool_result</code>:</p>
+          <pre><code>apply_patch
+shell_command
+codex_appload_workspace_dependencies
+codex_appread_thread_terminal
+get_goal
+list_mcp_resource_templates
+list_mcp_resources
+mcp__node_repljs
+tool_search</code></pre>
+
+          <p>These appeared under <code>codex.tool_decision</code>:</p>
+          <pre><code>apply_patch
+shell_command</code></pre>
+
+          <p>This means Codex telemetry captured detailed results for several local tools, but approval decision events were most visible for actions such as shell commands and file patches.</p>
+
+          <h3>What Did Not Appear</h3>
+          <p>We also tested hosted web/search-style activity.</p>
+
+          <p>Searches for terms like:</p>
+          <pre><code>web.run
+search_query
+example.com
+devlino.com</code></pre>
+
+          <p>did not appear in the local Loki telemetry stream.</p>
+
+          <p>That is an important finding.</p>
+
+          <p>It means this local Codex OpenTelemetry setup should not be treated as a full browser history or full network access log. It gives strong visibility into many tool-mediated local actions, but not every hosted or web-search action appeared in the local OTel data.</p>
+
+          <h3>What Codex OTel Is Good For</h3>
+          <p>Based on the testing, Codex OTel is useful for:</p>
+          <ul>
+            <li>Auditing local shell commands</li>
+            <li>Reviewing file patch actions</li>
+            <li>Seeing tool names and arguments</li>
+            <li>Seeing tool success or failure</li>
+            <li>Capturing tool output snippets or output fields</li>
+            <li>Seeing approval decisions for certain tools</li>
+            <li>Correlating activity to a conversation</li>
+            <li>Tracking prompt activity when prompt logging is enabled</li>
+          </ul>
+
+          <p>This is valuable for engineering governance and security review.</p>
+
+          <h3>What It Is Not</h3>
+          <p>Codex OTel should not be treated as complete forensic coverage.</p>
+
+          <p>It does not guarantee visibility into:</p>
+          <ul>
+            <li>Full internal model reasoning</li>
+            <li>Every website visited</li>
+            <li>Every network request</li>
+            <li>Every byte of every file read</li>
+            <li>Full memory contents or memory change history</li>
+            <li>OS-level process activity outside Codex tools</li>
+            <li>Network activity outside Codex-controlled paths</li>
+          </ul>
+
+          <p>Some of these may be visible when they happen through logged tools. For example, a shell command and its output may appear in <code>codex.tool_result</code>. But that does not mean every internal or hosted action is guaranteed to be logged.</p>
+
+          <h3>Security Implications</h3>
+          <p>The biggest security lesson is this:</p>
+          <pre><code>Codex telemetry can contain sensitive data.</code></pre>
+
+          <p>If Codex runs a command that prints a secret, the secret may appear in Loki.</p>
+
+          <p>For example:</p>
+          <pre><code>Get-Content .env</code></pre>
+
+          <p>could cause environment secrets to be stored in telemetry output.</p>
+
+          <p>Similarly, patch events may include file content, and shell command arguments may include paths, usernames, project names, or operational details.</p>
+
+          <p>Treat Loki and Grafana as sensitive systems.</p>
+
+          <p>Recommended controls:</p>
+          <ul>
+            <li>Keep Loki, Grafana, and the Collector bound to <code>127.0.0.1</code> for local testing.</li>
+            <li>Do not expose Grafana publicly without authentication.</li>
+            <li>Change default passwords.</li>
+            <li>Add retention limits.</li>
+            <li>Add secret redaction if sending logs to a shared platform.</li>
+            <li>Avoid logging prompts in shared environments unless approved.</li>
+            <li>Route production telemetry to an enterprise SIEM with access control.</li>
+            <li>Combine Codex telemetry with DNS, proxy, firewall, EDR, and file integrity logs for deeper coverage.</li>
+          </ul>
+
+          <h3>Useful Queries</h3>
+          <p>All Codex logs:</p>
+          <pre><code>{service_name="codex"}</code></pre>
+
+          <p>Tool results:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_result"</code></pre>
+
+          <p>Tool decisions:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_decision"</code></pre>
+
+          <p>Readable shell command results:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_result" | tool_name="shell_command"
+| line_format "{{.event_timestamp}} success={{.success}} args={{.arguments}} output={{.output}}"</code></pre>
+
+          <p>Readable patch results:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_result" | tool_name="apply_patch"
+| line_format "{{.event_timestamp}} success={{.success}} patch={{.arguments}} output={{.output}}"</code></pre>
+
+          <p>Search for web-related traces:</p>
+          <pre><code>{service_name="codex"} |~ "(?i)(web.run|search_query|http|https|domain|url)"</code></pre>
+
+          <p>Search for failed tools:</p>
+          <pre><code>{service_name="codex"} | event_name="codex.tool_result" | success="false"
+| line_format "{{.event_timestamp}} tool={{.tool_name}} args={{.arguments}} output={{.output}}"</code></pre>
+
+          <h3>Operational Lessons</h3>
+          <p>Here are the main takeaways from the setup:</p>
+          <ol>
+            <li><strong>Codex OTel works well for local tool auditing.</strong><br>Shell commands and file patches were clearly visible in Loki.</li>
+            <li><strong>Tool telemetry can be detailed.</strong><br>We saw command arguments, working directories, outputs, and approval context.</li>
+            <li><strong>Structured metadata matters.</strong><br>Grafana may show blank-looking log bodies unless you expand the row or use <code>line_format</code>.</li>
+            <li><strong>Web/search activity may not appear.</strong><br>Hosted web/search activity did not show up in our local Loki stream during testing.</li>
+            <li><strong>Telemetry is sensitive.</strong><br>Logs can contain command output, file paths, patches, and possibly secrets.</li>
+            <li><strong>This is observability, not total control.</strong><br>Codex OTel is one part of a broader security monitoring strategy.</li>
+          </ol>
+
+          <h3>Recommended Production Pattern</h3>
+          <p>For a serious organizational rollout, I would not stop at local Loki.</p>
+
+          <p>A stronger architecture is:</p>
+          <pre><code>Codex
+  -&gt; OpenTelemetry Collector
+  -&gt; Enterprise SIEM or log platform
+  -&gt; Alerting and investigation workflows</code></pre>
+
+          <p>Add supporting controls:</p>
+          <pre><code>DNS logs
+Proxy logs
+Firewall logs
+EDR telemetry
+Git audit logs
+File integrity monitoring
+Secret scanning
+Access reviews
+Retention policies</code></pre>
+
+          <p>For example:</p>
+          <ul>
+            <li>Use Codex OTel to see what tool was called.</li>
+            <li>Use EDR to see what process actually ran.</li>
+            <li>Use DNS/proxy logs to see what domains were reached.</li>
+            <li>Use Git/file monitoring to see what changed.</li>
+            <li>Use SIEM correlation to combine all of it.</li>
+          </ul>
+
+          <p>That gives a much better audit story than any one source alone.</p>
+
+          <h3>Final Thoughts</h3>
+          <p>Codex OpenTelemetry gives teams a practical starting point for AI coding agent observability.</p>
+
+          <p>It helps answer:</p>
+          <pre><code>What did the agent do?
+Which tool was used?
+Was it approved?
+Did it succeed?
+What output came back?</code></pre>
+
+          <p>But it should not be mistaken for a complete forensic recorder.</p>
+
+          <p>The best way to think about it is:</p>
+          <pre><code>Codex OTel gives strong visibility into supported Codex events and many tool-mediated actions.
+For complete security monitoring, combine it with endpoint, network, identity, and repository telemetry.</code></pre>
+
+          <p>That balance makes it useful without overestimating what it can prove.</p>
+
+          <h3>References</h3>
+          <ul>
+            <li><a href="https://developers.openai.com/codex/config-advanced#observability-and-telemetry" target="_blank" rel="noopener noreferrer">OpenAI Codex: Advanced Configuration - Observability and telemetry</a></li>
+            <li><a href="https://developers.openai.com/codex/config-reference" target="_blank" rel="noopener noreferrer">OpenAI Codex: Configuration Reference</a></li>
+            <li><a href="https://developers.openai.com/codex/permissions" target="_blank" rel="noopener noreferrer">OpenAI Codex: Permissions</a></li>
+          </ul>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <span>Devlino</span>
+      <span>Cyber security, AI automation, and curious systems</span>
+    </footer>
+  </div>
+</body>
+</html>

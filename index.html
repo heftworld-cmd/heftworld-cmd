@@ -442,7 +442,8 @@
     }
 
     .card.one {
-      grid-column: 1 / span 4;
+      grid-column: 1 / span 6;
+      --h: 370px;
       --r: -5deg;
       --hr: -0.8deg;
       --tx: 4px;
@@ -452,7 +453,7 @@
     }
 
     .card.two {
-      grid-column: 5 / span 4;
+      grid-column: 7 / span 6;
       --r: 3deg;
       --hr: 0.5deg;
       --tx: -8px;
@@ -461,8 +462,18 @@
       --accent: #444444;
     }
 
+    .card.three {
+      grid-column: 1 / span 6;
+      --r: -2deg;
+      --hr: -0.4deg;
+      --tx: 8px;
+      --ty: 6px;
+      --d: 220ms;
+      --accent: #5f5f5f;
+    }
+
     .card.seven {
-      grid-column: 9 / span 4;
+      grid-column: 7 / span 6;
       --r: 5deg;
       --hr: 0.8deg;
       --tx: -2px;
@@ -654,26 +665,16 @@
 
     <main>
       <section class="board" aria-label="Featured articles and projects">
-        <a class="card feature one" href="articles/bugcrowd-ai-slop.html" data-label="Article" data-title="Pretix SSRF in 1 Hour: Why Bugcrowd Is Fighting AI Slop" data-body="A field note on an LLM-assisted Pretix SSRF finding, why verified reports still matter, and why platforms are pushing back against unverified AI-generated submissions.">
+        <a class="card feature one" href="articles/codex-telemetry-observability.html" data-label="Article" data-title="Making Codex Observable: Sending Codex Telemetry to OpenTelemetry, Loki, and Grafana" data-body="A practical walkthrough of capturing Codex Desktop telemetry locally, what gets logged, what does not, and what security teams should know before treating it as an audit trail.">
           <div class="card-content">
-            <span class="meta">Article &middot; <time datetime="2026-05-07">May 7, 2026</time></span>
-            <h2>Pretix SSRF in 1 Hour</h2>
-            <p>Why Bugcrowd is fighting AI Slop, and what my LLM-assisted finding taught me.</p>
+            <span class="meta">Article &middot; <time datetime="2026-06-01">June 1, 2026</time></span>
+            <h2>Making Codex Observable: Sending Codex Telemetry to OpenTelemetry, Loki, and Grafana</h2>
+            <p>A practical walkthrough of capturing Codex Desktop telemetry locally, what gets logged, what does not, and what security teams should know before treating it as an audit trail.</p>
             <span class="open-link">Read article</span>
           </div>
         </a>
 
-        <a class="card tall two" href="projects/damn-vulnerable-chrome-extension.html" data-label="Project" data-title="Damn Vulnerable Chrome Extension" data-body="A deliberately vulnerable local Chrome extension lab for learning extension security issues hands-on.">
-          <div class="thumb extension" aria-hidden="true"></div>
-          <div class="card-content">
-            <span class="meta">Project &middot; <time datetime="2026-05-16">May 16, 2026</time></span>
-            <h3>Damn Vulnerable Chrome Extension</h3>
-            <p>A hands-on local lab for learning Chrome extension security flaws and fixes.</p>
-            <span class="open-link">Read project</span>
-          </div>
-        </a>
-
-        <a class="card wide seven" href="articles/ai-agents-security-architecture-review.html" data-label="Article" data-title="AI Agents as Security Review Peers" data-body="A reflection on AI agents as peer reviewers for agentic AI security architecture, with a link to sample SecOps Agent artifacts.">
+        <a class="card wide two" href="articles/ai-agents-security-architecture-review.html" data-label="Article" data-title="AI Agents as Security Review Peers" data-body="A reflection on AI agents as peer reviewers for agentic AI security architecture, with a link to sample SecOps Agent artifacts.">
           <div class="card-content">
             <span class="meta">Article &middot; <time datetime="2026-05-24">May 24, 2026</time></span>
             <h2>AI Agents as Security Review Peers</h2>
@@ -684,6 +685,25 @@
               <span></span>
               <span></span>
             </div>
+            <span class="open-link">Read article</span>
+          </div>
+        </a>
+
+        <a class="card tall three" href="projects/damn-vulnerable-chrome-extension.html" data-label="Project" data-title="Damn Vulnerable Chrome Extension" data-body="A deliberately vulnerable local Chrome extension lab for learning extension security issues hands-on.">
+          <div class="thumb extension" aria-hidden="true"></div>
+          <div class="card-content">
+            <span class="meta">Project &middot; <time datetime="2026-05-16">May 16, 2026</time></span>
+            <h3>Damn Vulnerable Chrome Extension</h3>
+            <p>A hands-on local lab for learning Chrome extension security flaws and fixes.</p>
+            <span class="open-link">Read project</span>
+          </div>
+        </a>
+
+        <a class="card wide seven" href="articles/bugcrowd-ai-slop.html" data-label="Article" data-title="Pretix SSRF in 1 Hour: Why Bugcrowd Is Fighting AI Slop" data-body="A field note on an LLM-assisted Pretix SSRF finding, why verified reports still matter, and why platforms are pushing back against unverified AI-generated submissions.">
+          <div class="card-content">
+            <span class="meta">Article &middot; <time datetime="2026-05-07">May 7, 2026</time></span>
+            <h2>Pretix SSRF in 1 Hour</h2>
+            <p>Why Bugcrowd is fighting AI Slop, and what my LLM-assisted finding taught me.</p>
             <span class="open-link">Read article</span>
           </div>
         </a>
