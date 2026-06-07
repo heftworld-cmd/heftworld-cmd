@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Practical OpenSSF Scorecard guidelines for enterprise dependency review, AI supply chain governance, and security decision-making.">
+  <meta name="theme-color" content="#f4f4f2">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none';">
+  <link rel="icon" href="../assets/devlino-logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/article-page.css">
+  <title>OpenSSF Scorecard Guidelines For Enterprise And AI Security | Devlino</title>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header" aria-label="Site header">
+      <div class="topbar">
+        <a class="logo" href="../index.html" aria-label="Devlino home">
+          <img class="logo-image" src="../assets/devlino-logo.svg" alt="Devlino">
+        </a>
+        <a class="contact-button" href="mailto:heftworld@gmail.com">Contact</a>
+      </div>
+
+      <section class="header-profile" aria-labelledby="site-focus">
+        <div class="avatar" role="img" aria-label="Devlino profile photo">
+          <img src="../assets/profile.png" alt="Portrait of Devlino" loading="eager" decoding="async">
+        </div>
+        <div class="header-copy">
+          <h1 id="site-focus">Cyber Security,<br>AI Automation and Curiosity</h1>
+          <p>Exploring defensive security, practical automation, AI workflows, and the questions that make better systems.</p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <article class="article-shell">
+        <a class="back-link" href="../index.html">Back to home</a>
+        <p class="article-meta">Article &middot; <time datetime="2026-06-07">June 7, 2026</time></p>
+        <h2>OpenSSF Scorecard Guidelines For Enterprise And AI Security</h2>
+        <div class="article-body">
+          <figure class="article-figure">
+            <img src="../assets/openSSF.png" alt="OpenSSF Scorecard reference visual" loading="eager" decoding="async">
+          </figure>
+
+          <p>Open source is now part of nearly every modern software system. In AI systems, the dependency surface is even broader: agent frameworks, model-serving libraries, vector database clients, data connectors, browser automation tools, MCP servers, evaluation frameworks, CI/CD workflows, and package managers all become part of the trust boundary.</p>
+
+          <p>That makes open source security posture a serious enterprise risk. OpenSSF Scorecard helps by giving security and engineering teams an automated way to evaluate visible security practices in open source projects.</p>
+
+          <p>The important word is visible. Scorecard does not prove that a project is safe. It gives a first-line signal about whether the project appears to follow healthy security habits.</p>
+
+          <h3>What Scorecard Actually Tells You</h3>
+
+          <p>OpenSSF Scorecard checks repositories across areas such as maintenance, code review, branch protection, pinned dependencies, known vulnerabilities, CI testing, release signing, security policies, dangerous GitHub Actions patterns, token permissions, SAST, and fuzzing.</p>
+
+          <p>The aggregate score is useful, but it should never become the final verdict. A project with a high score may still have a serious issue. A project with a lower score may simply be missing metadata or using workflows that are difficult for automated tooling to inspect.</p>
+
+          <p>The real value is in the individual checks.</p>
+
+          <blockquote>
+            <p>Use Scorecard as decision support, not as blind approval.</p>
+          </blockquote>
+
+          <p>For example, a failed <code>Dangerous-Workflow</code> or <code>Token-Permissions</code> check may matter much more than a small drop in the total score. Security teams should review the checks that map directly to supply chain compromise paths.</p>
+
+          <h3>Reading A Real Scorecard Output</h3>
+
+          <p>A sample Scorecard run evaluated <code>github.com/microsoft/PyRIT</code> at commit <code>39f892db5acc32f8b5d2c3b8a9bbe8fdfc04104c</code> using Scorecard <code>v5.5.0</code>. The overall score was <strong>7.7</strong>.</p>
+
+          <p>At first glance, 7.7 looks healthy. But this is exactly why the aggregate number should not be used alone. The individual checks tell a more useful story.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Signal</th>
+                  <th>Scorecard result</th>
+                  <th>How to interpret it</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Strong project hygiene</td>
+                  <td><code>Binary-Artifacts</code>, <code>CI-Tests</code>, <code>Code-Review</code>, <code>Contributors</code>, <code>Dangerous-Workflow</code>, <code>Dependency-Update-Tool</code>, <code>License</code>, <code>Maintained</code>, <code>Packaging</code>, and <code>Security-Policy</code> scored 10.</td>
+                  <td>The project shows many good visible security practices: reviewed changes, CI coverage, active maintenance, a license, a security policy, Dependabot, and no dangerous GitHub Actions patterns detected.</td>
+                </tr>
+                <tr>
+                  <td>Branch protection gap</td>
+                  <td><code>Branch-Protection</code> scored 5.</td>
+                  <td>The main branch is protected, but not maximally. The output notes gaps such as admin enforcement not enabled, stale review dismissal disabled, only one required approving review, no required Code Owners review, and last-push approval disabled.</td>
+                </tr>
+                <tr>
+                  <td>Build dependency pinning risk</td>
+                  <td><code>Pinned-Dependencies</code> scored 0.</td>
+                  <td>This is the biggest supply chain concern in the output. Multiple GitHub Actions, container images, download-and-run steps, and package install commands are not pinned by hash. For CI/CD, build, or AI toolchain use, this deserves review before approval.</td>
+                </tr>
+                <tr>
+                  <td>Analysis coverage gaps</td>
+                  <td><code>SAST</code> scored 0 and <code>Fuzzing</code> scored 0.</td>
+                  <td>Scorecard did not detect static analysis on all commits or fuzzer integrations. That does not prove the code is vulnerable, but it means those assurance signals were missing from the visible repository posture.</td>
+                </tr>
+                <tr>
+                  <td>Workflow token permissions</td>
+                  <td><code>Token-Permissions</code> scored 8.</td>
+                  <td>Most permissions appear constrained, but the output still found excessive permissions and missing top-level permission declarations in some workflows. This matters because workflow tokens can become an attack path after a CI compromise.</td>
+                </tr>
+                <tr>
+                  <td>Incomplete checks</td>
+                  <td><code>CII-Best-Practices</code> and <code>Vulnerabilities</code> returned internal errors. <code>Signed-Releases</code> returned no releases found.</td>
+                  <td>The run ended with an error because some external checks failed due to certificate verification problems. Treat those as unknowns, not as passes. Re-run from a clean network environment or validate vulnerabilities with SCA tooling before making a production decision.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>My reading of this output would be: the project has strong community and repository hygiene, but it should not receive blind approval for production, CI/CD, or agentic AI use based only on the 7.7 score. The review should focus on unpinned build dependencies, branch protection hardening, SAST coverage, fuzzing coverage, token permissions, and a separate vulnerability scan because the vulnerability check did not complete.</p>
+
+          <p>For a research or lab environment, this may be acceptable with isolation. For a production AI security workflow, I would mark it as <strong>approved with review</strong> or <strong>blocked pending review</strong>, depending on how much authority the dependency has over data, credentials, code execution, or deployment.</p>
+
+          <h3>Where Organizations Should Use It</h3>
+
+          <p>Scorecard is most valuable during new open source dependency intake. Before a team introduces a new package, GitHub Action, AI framework, model-serving tool, plugin, or SDK, Scorecard can provide a quick security posture review.</p>
+
+          <p>It should also be used for ongoing monitoring of critical dependencies. Open source projects change over time. A project that looked healthy six months ago may become unmaintained, introduce risky workflows, stop signing releases, or accumulate unresolved vulnerabilities.</p>
+
+          <p>Organizations should also apply Scorecard to their own internal and public repositories. That improves engineering hygiene and helps teams find gaps in branch protection, token permissions, dependency pinning, release practices, and security policy documentation.</p>
+
+          <p>For AI security, the strongest use cases are AI supply chain governance and toolchain review. Any open source component that can influence model behavior, access data, execute code, connect to external tools, or participate in deployment should be reviewed before production use.</p>
+
+          <h3>Risk Tiering For AI And Enterprise Dependencies</h3>
+
+          <p>A practical policy should classify dependencies by risk before applying enforcement. A formatter and an agent framework should not go through the same process.</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Risk tier</th>
+                  <th>Examples</th>
+                  <th>Scorecard guidance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Critical</td>
+                  <td>Inference servers, agent frameworks, authentication libraries, sandboxing tools, model execution components, production runtime dependencies</td>
+                  <td>Required</td>
+                </tr>
+                <tr>
+                  <td>High</td>
+                  <td>CI/CD tooling, GitHub Actions, deployment scripts, release automation, data pipelines, infrastructure provisioning tools</td>
+                  <td>Required</td>
+                </tr>
+                <tr>
+                  <td>Medium</td>
+                  <td>Business logic libraries and common application packages</td>
+                  <td>Reviewed</td>
+                </tr>
+                <tr>
+                  <td>Low</td>
+                  <td>Local development tools, test utilities, formatters, and experimental notebook-only packages</td>
+                  <td>Advisory unless promoted into production</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>For critical and high-risk dependencies, Scorecard should be required. For medium-risk dependencies, it should be reviewed. For low-risk dependencies, it can be advisory unless the package is promoted into production.</p>
+
+          <h3>A Practical Internal Policy</h3>
+
+          <p>A strong internal policy could say:</p>
+
+          <pre><code>All new open source dependencies used in production, build systems,
+deployment workflows, AI agents, model-serving paths, data pipelines,
+or security-sensitive code must be evaluated using OpenSSF Scorecard
+before approval.
+
+Approval decisions must prioritize individual high-risk checks, not only
+the aggregate score. Exceptions require documented compensating controls,
+a named risk owner, and an expiry date.</code></pre>
+
+          <p>Suggested thresholds:</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Risk tier</th>
+                  <th>Guidance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Critical</td>
+                  <td>Score &gt;= 7.5 and no unresolved critical or high-risk failure</td>
+                </tr>
+                <tr>
+                  <td>High</td>
+                  <td>Score &gt;= 6.5 with review of failed checks</td>
+                </tr>
+                <tr>
+                  <td>Medium</td>
+                  <td>Score reviewed and major issues documented</td>
+                </tr>
+                <tr>
+                  <td>Low</td>
+                  <td>Best-effort review</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>The checks that deserve the most attention are:</p>
+
+          <ul>
+            <li><code>Dangerous-Workflow</code></li>
+            <li><code>Token-Permissions</code></li>
+            <li><code>Branch-Protection</code></li>
+            <li><code>Code-Review</code></li>
+            <li><code>Maintained</code></li>
+            <li><code>Vulnerabilities</code></li>
+            <li><code>Pinned-Dependencies</code></li>
+            <li><code>Signed-Releases</code></li>
+            <li><code>Security-Policy</code></li>
+          </ul>
+
+          <h3>Implementation Options</h3>
+
+          <p>There are three practical ways to use Scorecard.</p>
+
+          <h4>API</h4>
+
+          <p>The API is useful for fast lookups of public projects:</p>
+
+          <pre><code>https://api.scorecard.dev/projects/github.com/OWNER/REPO</code></pre>
+
+          <h4>Docker CLI</h4>
+
+          <p>The Docker CLI is useful for repeatable local runs, CI jobs, and security review automation:</p>
+
+          <pre><code>export GITHUB_AUTH_TOKEN="YOUR_GITHUB_TOKEN"
+
+docker run --rm \
+  -e GITHUB_AUTH_TOKEN="${GITHUB_AUTH_TOKEN}" \
+  ghcr.io/ossf/scorecard:latest \
+  --repo=github.com/OWNER/REPO \
+  --show-details \
+  --format=json</code></pre>
+
+          <p>You can also run selected checks:</p>
+
+          <pre><code>docker run --rm \
+  -e GITHUB_AUTH_TOKEN="${GITHUB_AUTH_TOKEN}" \
+  ghcr.io/ossf/scorecard:latest \
+  --repo=github.com/OWNER/REPO \
+  --checks=Dangerous-Workflow,Token-Permissions,Vulnerabilities,Pinned-Dependencies \
+  --show-details \
+  --format=json</code></pre>
+
+          <h4>GitHub Action</h4>
+
+          <p>The GitHub Action is best for repositories the organization owns. It can publish results, create code scanning alerts, and make security posture visible to maintainers.</p>
+
+          <h3>Problems After Implementation</h3>
+
+          <p>The first challenge is noise. Many projects will have low or partial scores, and not every finding represents real risk. Some checks may be missing because of permission issues, private repository limits, or repository patterns Scorecard cannot fully inspect.</p>
+
+          <p>The second problem is aggregate score misuse. Teams may say, "This dependency scored 8.2, so it is safe." That is the wrong interpretation. Scorecard measures visible security practices, not code safety, maintainer intent, malware absence, exploitability, or runtime behavior.</p>
+
+          <p>Developer friction is another risk. If Scorecard becomes a hard gate too early, teams may treat it as bureaucracy and try to bypass it. A better rollout is advisory first, then gradually enforce high-confidence checks for high-risk dependencies.</p>
+
+          <p>Dependency-to-repository mapping also requires investment. Package names do not always map cleanly to source repositories, especially across npm, PyPI, GitHub Actions, Docker images, forks, and AI tooling.</p>
+
+          <p>Ownership matters too. A finding must have a responsible owner. Without ownership, findings become dashboard noise.</p>
+
+          <h3>Where To Invest Post-Implementation</h3>
+
+          <p>The first investment should be risk tiering. Not every dependency deserves the same scrutiny.</p>
+
+          <p>The second investment should be check-level policy. Instead of gating on the total score, define which checks matter for each dependency tier.</p>
+
+          <p>The third investment should be triage playbooks. For example:</p>
+
+          <ul>
+            <li>If <code>Maintained</code> is low, require an alternative, fork plan, or internal owner.</li>
+            <li>If <code>Vulnerabilities</code> fails, confirm with SCA and require a remediation plan.</li>
+            <li>If <code>Dangerous-Workflow</code> fails, block for CI/CD and build-system dependencies.</li>
+            <li>If <code>Pinned-Dependencies</code> fails, require pinning or compensating controls.</li>
+            <li>If <code>Security-Policy</code> is missing, accept only for lower-risk dependencies.</li>
+          </ul>
+
+          <p>The fourth investment should be an exception process. Every exception should include:</p>
+
+          <ul>
+            <li>Dependency name</li>
+            <li>Failed checks</li>
+            <li>Business justification</li>
+            <li>Risk owner</li>
+            <li>Compensating controls</li>
+            <li>Expiry date</li>
+            <li>Review date</li>
+          </ul>
+
+          <p>The fifth investment should be developer experience. Engineers should receive a simple outcome: approved, approved with review, or blocked pending review. Raw JSON should feed automation and dashboards, not become the developer interface.</p>
+
+          <h3>Best Enterprise Use Cases</h3>
+
+          <p>The strongest use cases are:</p>
+
+          <ul>
+            <li>New dependency approval</li>
+            <li>GitHub Action approval</li>
+            <li>Critical dependency monitoring</li>
+            <li>Internal repository hardening</li>
+            <li>AI toolchain governance</li>
+            <li>Vendor and security review support</li>
+            <li>Executive reporting</li>
+          </ul>
+
+          <p>For executive reporting, track trends rather than vanity scores:</p>
+
+          <ul>
+            <li>Number of critical dependencies with failed high-risk checks</li>
+            <li>Exception age</li>
+            <li>Recurring failures</li>
+            <li>Unmaintained dependencies</li>
+            <li>Risky GitHub Actions</li>
+            <li>AI/ML dependency posture</li>
+          </ul>
+
+          <h3>What Scorecard Should Not Replace</h3>
+
+          <p>OpenSSF Scorecard should sit beside, not replace:</p>
+
+          <ul>
+            <li>SCA and dependency vulnerability scanning</li>
+            <li>SBOM generation</li>
+            <li>License scanning</li>
+            <li>Secrets scanning</li>
+            <li>Container image scanning</li>
+            <li>Provenance and SLSA checks</li>
+            <li>Artifact signing</li>
+            <li>Malware or package reputation tools</li>
+            <li>Manual security review</li>
+            <li>Threat modeling</li>
+            <li>Model security review</li>
+          </ul>
+
+          <p>It answers:</p>
+
+          <blockquote>
+            <p>Does this project show healthy security practices?</p>
+          </blockquote>
+
+          <p>It does not answer:</p>
+
+          <blockquote>
+            <p>Is this code safe?</p>
+          </blockquote>
+
+          <h3>Conclusion</h3>
+
+          <p>OpenSSF Scorecard is most powerful when used as a practical security signal inside a broader supply chain program. It should sit alongside SCA, SBOMs, license scanning, secrets scanning, container scanning, provenance verification, artifact signing, and manual security review.</p>
+
+          <p>For AI security, the rule should be simple: any open source component that can affect data, tools, credentials, model behavior, deployment, or code execution deserves a Scorecard review before production use.</p>
+
+          <p>The goal is not to chase a perfect score. The goal is to make better dependency decisions, reduce preventable supply chain risk, and create clear ownership for open source security.</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <span>Devlino</span>
+      <span>Cyber security, AI automation, and curious systems</span>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+tool_id,tool_name,tool_owner,agent_allowed,allowed_operations,blocked_operations,data_classes,parameter_schema_location,agent_side_validation,tool_side_validation,requires_human_approval,sandbox_required,network_scope,file_system_scope,credential_scope,audit_log_location,last_reviewed,notes
+tool-001,customer-read-api,,yes,read_customer;summarize_record,delete_customer;export_all,confidential,,,,yes,no,private-api-only,none,read-only,,, 
+tool-002,email-tool,,conditional,read;draft,send;delete,confidential,,,,yes,yes,mail-api-only,none,read-draft-only,,, 

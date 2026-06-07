@@ -441,6 +441,28 @@
       --h: 360px;
     }
 
+    .card.zero {
+      grid-column: 7 / span 6;
+      --h: 292px;
+      --r: -1.5deg;
+      --hr: -0.3deg;
+      --tx: 0px;
+      --ty: 0px;
+      --d: 60ms;
+      --accent: #111111;
+    }
+
+    .card.kit {
+      grid-column: 1 / span 6;
+      --h: 292px;
+      --r: 1.5deg;
+      --hr: 0.3deg;
+      --tx: 0px;
+      --ty: 0px;
+      --d: 40ms;
+      --accent: #111111;
+    }
+
     .card.one {
       grid-column: 1 / span 6;
       --h: 360px;
@@ -676,6 +698,24 @@
 
     <main>
       <section class="board" aria-label="Featured articles and projects">
+        <a class="card feature kit" href="articles/secure-ai-agent-implementation-toolkit.html" data-label="Article" data-title="A Practical Toolkit for Secure AI Agent Implementation" data-body="Implementation-ready artifacts for agent boundaries, tool access, credentials, memory, testing, metrics, and launch gates.">
+          <div class="card-content">
+            <span class="meta">Article &middot; <time datetime="2026-06-07">June 7, 2026</time></span>
+            <h2>A Practical Toolkit for Secure AI Agent Implementation</h2>
+            <p>Implementation-ready artifacts for agent boundaries, tool access, credentials, memory, testing, metrics, and launch gates.</p>
+            <span class="open-link">Read article</span>
+          </div>
+        </a>
+
+        <a class="card feature zero" href="articles/openssf-scorecard-guidelines.html" data-label="Article" data-title="OpenSSF Scorecard Guidelines For Enterprise And AI Security" data-body="Practical guidance for using OpenSSF Scorecard in dependency intake, AI supply chain governance, and enterprise risk decisions.">
+          <div class="card-content">
+            <span class="meta">Article &middot; <time datetime="2026-06-07">June 7, 2026</time></span>
+            <h2>OpenSSF Scorecard Guidelines For Enterprise And AI Security</h2>
+            <p>Practical guidance for using OpenSSF Scorecard in dependency intake, AI supply chain governance, and enterprise risk decisions.</p>
+            <span class="open-link">Read article</span>
+          </div>
+        </a>
+
         <a class="card feature one" href="articles/agentic-ai-judgment.html" data-label="Article" data-title="From Reading AI Papers To Building Judgment: What Anthropic's Zero Trust For AI Agents Taught Me" data-body="The value is in turning documents into judgment, architecture, controls, and decisions.">
           <div class="card-content">
             <span class="meta">Article &middot; <time datetime="2026-06-03">June 3, 2026</time></span>

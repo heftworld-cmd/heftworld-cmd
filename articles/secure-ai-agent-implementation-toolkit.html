@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A practical toolkit for implementing secure AI agents with boundaries, scoped permissions, protected credentials, controlled memory, testing, metrics, and launch gates.">
+  <meta name="theme-color" content="#f4f4f2">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none';">
+  <link rel="icon" href="../assets/devlino-logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/article-page.css">
+  <title>A Practical Toolkit for Secure AI Agent Implementation | Devlino</title>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header" aria-label="Site header">
+      <div class="topbar">
+        <a class="logo" href="../index.html" aria-label="Devlino home">
+          <img class="logo-image" src="../assets/devlino-logo.svg" alt="Devlino">
+        </a>
+        <a class="contact-button" href="mailto:heftworld@gmail.com">Contact</a>
+      </div>
+
+      <section class="header-profile" aria-labelledby="site-focus">
+        <div class="avatar" role="img" aria-label="Devlino profile photo">
+          <img src="../assets/profile.png" alt="Portrait of Devlino" loading="eager" decoding="async">
+        </div>
+        <div class="header-copy">
+          <h1 id="site-focus">Cyber Security,<br>AI Automation and Curiosity</h1>
+          <p>Exploring defensive security, practical automation, AI workflows, and the questions that make better systems.</p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <article class="article-shell">
+        <a class="back-link" href="../index.html">Back to home</a>
+        <p class="article-meta">Article &middot; <time datetime="2026-06-07">June 7, 2026</time></p>
+        <h2>A Practical Toolkit for Secure AI Agent Implementation</h2>
+        <div class="article-body">
+          <p>AI agents are becoming software actors with tools, credentials, memory, and access to business systems. That makes implementation discipline important. A secure agent needs clear boundaries, scoped permissions, protected credentials, controlled memory, and measurable behavior.</p>
+
+          <p>I created this artifact pack to help teams move from agent idea to production readiness. It includes a master checklist plus templates for agent boundaries, AI bill of materials, tool access, credential policy, memory policy, security testing, metrics, and launch gates.</p>
+
+          <h3>The Questions Before Deployment</h3>
+
+          <p>Before deploying an agent, teams should be able to answer:</p>
+
+          <ul>
+            <li>What is the agent allowed to do?</li>
+            <li>What systems, tools, and data can it access?</li>
+            <li>Which actions require human approval?</li>
+            <li>How are credentials issued and revoked?</li>
+            <li>How is memory protected from poisoning or leakage?</li>
+            <li>How quickly can abnormal behavior be detected and stopped?</li>
+          </ul>
+
+          <p>If these questions are vague, the implementation is not ready. Agent security cannot depend only on a model instruction that says "be careful." The system needs enforceable boundaries that restrict what the agent can do even when the prompt, memory, tool output, or surrounding workflow becomes hostile.</p>
+
+          <h3>The Core Control Test</h3>
+
+          <p>The guiding question for every control is:</p>
+
+          <blockquote>
+            <p>Does this make the attack impossible, or only tedious?</p>
+          </blockquote>
+
+          <p>That question is useful because many agent controls look reassuring but only add friction. A warning banner, a policy document, or a manual review note may slow an attacker down, but it does not necessarily remove the dangerous capability.</p>
+
+          <p>Stronger controls remove capability, isolate trust boundaries, expire credentials, validate tool inputs, cryptographically verify identity, or require approval before irreversible actions. Those controls are harder to bypass because they are enforced by architecture, not only by intent.</p>
+
+          <h3>A Lightweight Implementation Workflow</h3>
+
+          <p>Use the pack as a lightweight implementation workflow:</p>
+
+          <ol>
+            <li>Define the agent use case.</li>
+            <li>Set explicit boundaries for allowed and prohibited behavior.</li>
+            <li>Restrict tool access to the minimum required capabilities.</li>
+            <li>Protect credentials with short-lived, scoped, revocable access.</li>
+            <li>Protect memory and context from poisoning, leakage, and stale assumptions.</li>
+            <li>Test prompt injection, tool misuse, credential abuse, memory abuse, and supply chain exposure.</li>
+            <li>Measure behavior with security metrics and operational telemetry.</li>
+            <li>Approve launch through owners, reviewers, and go/no-go gates.</li>
+          </ol>
+
+          <p>The goal is not to create paperwork. The goal is to create a repeatable path from idea to controlled deployment, with evidence that the most important failure modes were considered before the agent touches real data or real systems.</p>
+
+          <h3>What The Artifact Pack Covers</h3>
+
+          <p>The artifact pack breaks implementation into working documents that can be filled in by product, engineering, security, compliance, and operations teams.</p>
+
+          <ul>
+            <li><strong>Master checklist:</strong> an end-to-end checklist for phases, acceptance criteria, and launch readiness.</li>
+            <li><strong>Agent boundary specification:</strong> a clear definition of what the agent may do, must not do, and when it must escalate to a human.</li>
+            <li><strong>AI bill of materials:</strong> an inventory of models, datasets, tools, prompts, dependencies, and supporting services.</li>
+            <li><strong>Tool access matrix:</strong> a map of allowed tools, capability limits, parameter validation, and sandboxing expectations.</li>
+            <li><strong>Credential policy:</strong> guidance for short-lived, scoped, revocable credentials and secrets handling.</li>
+            <li><strong>Memory and context policy:</strong> rules for memory isolation, retention, context integrity, and poisoning controls.</li>
+            <li><strong>Security test plan:</strong> test cases for prompt injection, tool misuse, credential abuse, memory issues, and supply chain risks.</li>
+            <li><strong>Metrics dashboard:</strong> measures for dwell time, alert coverage, explainability, detection speed, and behavior conformance.</li>
+            <li><strong>RACI and stage gates:</strong> owners, reviewers, approvals, exception paths, and go/no-go decisions.</li>
+          </ul>
+
+          <h3>How To Use It In Practice</h3>
+
+          <p>Start with the master checklist and agent boundary specification. Those two documents force the team to define what the agent is supposed to do, what it must never do, and what evidence is required before launch.</p>
+
+          <p>Then build the AI bill of materials and tool access matrix. This is where the trust boundary becomes visible. If an agent can call a browser, query a database, read customer data, create tickets, send email, modify code, or trigger deployment, that capability should appear in the matrix with a clear owner and control.</p>
+
+          <p>Credential and memory policies should come next. Credentials determine blast radius. Memory determines what the agent may carry forward, trust, retrieve, or leak. Both need explicit rules before the agent is connected to production workflows.</p>
+
+          <p>Finally, use the security test plan, metrics dashboard, and RACI gates to decide whether the implementation is ready. A launch decision should not be based only on a demo. It should be based on tested controls, assigned owners, measurable behavior, and a known residual risk statement.</p>
+
+          <h3>Artifact References</h3>
+
+          <p>The implementation files are available here:</p>
+
+          <div class="artifact-link">
+            <h3>Agent Implementation Workflow Artifacts</h3>
+            <ul>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/01_master_checklist.md">01_master_checklist.md</a> - end-to-end phase checklist and acceptance gates.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/02_agent_boundary_spec.md">02_agent_boundary_spec.md</a> - define what each agent may do, must not do, and when it escalates.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/03_ai_bom_template.csv">03_ai_bom_template.csv</a> - AI bill of materials for models, datasets, tools, prompts, and dependencies.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/04_tool_access_matrix.csv">04_tool_access_matrix.csv</a> - tool allow-list, capability limits, parameter validation, and sandboxing.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/05_credential_policy.md">05_credential_policy.md</a> - short-lived, scoped, revocable credential policy.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/06_memory_context_policy.md">06_memory_context_policy.md</a> - memory isolation, retention, context integrity, and poisoning controls.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/07_security_test_plan.md">07_security_test_plan.md</a> - prompt injection, tool misuse, credential, memory, and supply-chain test cases.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/08_metrics_dashboard.md">08_metrics_dashboard.md</a> - dwell time, alert coverage, explainability, detection speed, and behavior conformance.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/09_raci_and_stage_gates.md">09_raci_and_stage_gates.md</a> - owners, reviewers, approvals, and go/no-go gates.</li>
+              <li><a href="../assets/agent_implementation_workflow_artifacts/README.md">README.md</a> - artifact pack overview and recommended order of use.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <span>Devlino</span>
+      <span>Cyber security, AI automation, and curious systems</span>
+    </footer>
+  </div>
+</body>
+</html>

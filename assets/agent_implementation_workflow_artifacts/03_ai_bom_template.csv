@@ -1,0 +1,7 @@
+component_id,component_type,name,owner,provider,source,version,environment,purpose,data_classification,model_or_package_hash,license,provenance_evidence,training_data_lineage,fine_tune_details,prompt_template_reference,dependency_score,vulnerability_status,signed_artifact,approval_status,review_date,next_review_date,notes
+ai-model-001,model,,,,,,,,,,,,,,,,,,,,,
+dataset-001,dataset,,,,,,,,,,,,,,,,,,,,,
+prompt-001,prompt_template,,,,,,,,,,,,,,,,,,,,,
+tool-001,tool_or_mcp_server,,,,,,,,,,,,,,,,,,,,,
+package-001,software_dependency,,,,,,,,,,,,,,,,,,,,,
+image-001,container_image,,,,,,,,,,,,,,,,,,,,,
