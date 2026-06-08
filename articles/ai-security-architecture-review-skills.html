@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The technical skills needed to judge, challenge, and discuss AI security architecture reviews with AI systems.">
+  <meta name="theme-color" content="#fbf7ed">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none';">
+  <link rel="icon" href="../assets/profile.png" type="image/png">
+  <link rel="stylesheet" href="../assets/article-page.css">
+  <title>Skills Required To Judge And Discuss AI Security Architecture Reviews With AI | Devlino</title>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header" aria-label="Site header">
+      <div class="topbar">
+        <a class="logo" href="../index.html" aria-label="Devlino home">
+          <img class="logo-image" src="../assets/devlino-logo.svg" alt="Devlino">
+        </a>
+        <a class="contact-button" href="mailto:heftworld@gmail.com">Contact</a>
+      </div>
+
+      <section class="header-profile" aria-labelledby="site-focus">
+        <div class="avatar" role="img" aria-label="Devlino profile photo">
+          <img src="../assets/profile.png" alt="Portrait of Devlino" loading="eager" decoding="async">
+        </div>
+        <div class="header-copy">
+          <h1 id="site-focus">Cyber Security,<br>AI Automation and Curiosity</h1>
+          <p>Exploring defensive security, practical automation, AI workflows, and the questions that make better systems.</p>
+        </div>
+      </section>
+    </header>
+
+    <main>
+      <article class="article-shell">
+        <a class="back-link" href="../index.html">Back to home</a>
+        <p class="article-meta">Article &middot; <time datetime="2026-06-08">June 8, 2026</time></p>
+        <h2>Skills Required To Judge And Discuss AI Security Architecture Reviews With AI</h2>
+        <div class="article-body">
+          <p>AI can help review security architecture, but it should not become the final authority. The professional edge is being able to challenge the AI, test its assumptions, and decide whether its recommendations are safe, complete, and realistic.</p>
+
+          <p>Do not treat this as a normal reading list. Treat it as a judgment map. The goal is to build enough technical depth that you can discuss an agent architecture with AI, ask better questions, and know when the answer is missing something important.</p>
+
+          <blockquote>
+            <p>The real skill is not asking AI for a review. The real skill is knowing whether the review is good.</p>
+          </blockquote>
+
+          <h3>The Core Judgment Questions</h3>
+
+          <p>Before accepting an AI-generated architecture review, you should be able to ask:</p>
+
+          <ul>
+            <li>What can this agent actually do if things go wrong?</li>
+            <li>Is this a prompt problem, identity problem, tool problem, or architecture problem?</li>
+            <li>Can I trust that this agent is really who it claims to be?</li>
+            <li>Is the agent allowed to do only this task, or can it accidentally do much more?</li>
+            <li>If this agent is compromised, where can the attacker move next?</li>
+            <li>Are we relying on the model to behave, or have we built external controls?</li>
+            <li>Can we reconstruct what the agent saw, decided, and did?</li>
+            <li>Who is allowed to accept the residual risk?</li>
+          </ul>
+
+          <h3>Technical Domains To Master</h3>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>What to understand</th>
+                  <th>Judgment you build</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Agentic AI fundamentals</td>
+                  <td>Autonomous execution, tool calling, MCP servers, RAG, context windows, instruction hierarchy, memory, multi-agent delegation, agent-to-agent trust, least agency, and blast radius.</td>
+                  <td>What can this agent actually do if things go wrong?</td>
+                </tr>
+                <tr>
+                  <td>Agentic threats</td>
+                  <td>Direct and indirect prompt injection, adversarial suffixes, encoded prompt attacks, tool hijacking, confused deputy paths, memory poisoning, context poisoning, tool-output poisoning, and AI-accelerated exploitation.</td>
+                  <td>Is this a prompt issue, identity issue, tool issue, or architecture issue?</td>
+                </tr>
+                <tr>
+                  <td>Agent identity and authentication</td>
+                  <td>Cryptographic identity, workload identity, non-repudiation, OAuth, OIDC, short-lived tokens, X.509, PKI, certificate rotation, revocation, mTLS, HSM, TPM, remote attestation, and hardware-bound credentials.</td>
+                  <td>Can I trust that this agent is really who it claims to be?</td>
+                </tr>
+                <tr>
+                  <td>Authorization and least agency</td>
+                  <td>RBAC, ABAC, policy decision points, policy enforcement points, deny-by-default access, task-scoped permissions, tool-scoped permissions, parameter-level authorization, JIT/JEA, and continuous authorization.</td>
+                  <td>Is the agent limited to this task, or can it accidentally do much more?</td>
+                </tr>
+                <tr>
+                  <td>Runtime isolation and boundaries</td>
+                  <td>Identity isolation, network segmentation, service mesh security, sandboxed execution, containers, gVisor, seccomp, restricted filesystem mounts, restricted egress, ephemeral workspaces, microVMs, confidential computing, and immutable runtimes.</td>
+                  <td>If this agent is compromised, where can the attacker move next?</td>
+                </tr>
+                <tr>
+                  <td>Tool security</td>
+                  <td>Tool allowlists, denylist limitations, MCP server security, tool schemas, parameter validation, capability restriction, tool authentication, tool authorization, risk classification, approval gates, circuit breakers, and read-only versus write-capable tools.</td>
+                  <td>Is this tool safe for an autonomous agent to use?</td>
+                </tr>
+                <tr>
+                  <td>Input, context, and output controls</td>
+                  <td>Schema validation, input sanitization limits, attack pattern detection, content filtering, indirect prompt injection filtering, spotlighting, context isolation, untrusted content labeling, DLP, semantic output analysis, redaction, and human approval for high-risk actions.</td>
+                  <td>Are controls enforced outside the model, or are we only hoping the model behaves?</td>
+                </tr>
+                <tr>
+                  <td>Observability and provenance</td>
+                  <td>Structured action logs, tool invocation logs, authorization logs, request IDs, correlation IDs, distributed tracing, OpenTelemetry, immutable audit logs, tamper-evident logs, provenance chains, decision replay, model version tracking, prompt/config versioning, and tool output recording.</td>
+                  <td>Can we reconstruct what the agent saw, decided, and did?</td>
+                </tr>
+                <tr>
+                  <td>Behavior monitoring and detection</td>
+                  <td>Behavior baselines, automated baseline learning, statistical anomaly detection, ML-based behavior analysis, drift detection, slow poisoning detection, tool usage anomalies, data access anomalies, privilege request anomalies, dwell time, alert coverage, and false-positive tuning.</td>
+                  <td>Would we know if the agent started behaving abnormally?</td>
+                </tr>
+                <tr>
+                  <td>Automated response</td>
+                  <td>SOAR, agent-assisted triage, automated containment, session termination, credential revocation, certificate revocation, runtime quarantine, workflow pause, dynamic access reduction, human approval boundaries, and defensive agent blast radius.</td>
+                  <td>What can be automated safely, and what must remain a human decision?</td>
+                </tr>
+                <tr>
+                  <td>Configuration integrity and recovery</td>
+                  <td>Version-controlled configs, prompt versioning, policy versioning, signed configurations, deployment verification, image signing, runtime attestation, rollback procedures, automated rollback, health checks, circuit breakers, and known-good recovery.</td>
+                  <td>Can we restore the agent to a known-good state quickly?</td>
+                </tr>
+                <tr>
+                  <td>AI supply chain security</td>
+                  <td>AI-BOM, ML-BOM, CycloneDX, model provenance, training data lineage, fine-tuning parameter tracking, dependency health, OpenSSF Scorecard, signed releases, maintainer activity, reachability analysis, vulnerable dependency remediation, MCP server supply chain risk, and vendor security assessment.</td>
+                  <td>Can we trust the model, tool, dependency, or MCP server we are plugging into the agent?</td>
+                </tr>
+                <tr>
+                  <td>Governance, risk, and compliance</td>
+                  <td>AI acceptable-use policy, agent deployment approval, shadow AI risk, agent incident response, AI governance committees, model/tool/data inventory, risk tiering, residual risk acceptance, audit evidence, compliance mapping, NIST Zero Trust, and sector-specific obligations.</td>
+                  <td>Who is allowed to accept this risk, and what evidence do they need?</td>
+                </tr>
+                <tr>
+                  <td>Defensive operations at agent speed</td>
+                  <td>AI-assisted alert triage, SIEM query tools, alert enrichment, evidence automation, MITRE ATT&amp;CK coverage mapping, Atomic Red Team tests, lateral movement detection, credential access detection, tabletop exercises, emergency change procedures, emergency credential rotation, and emergency containment authorization.</td>
+                  <td>Can the organization defend at the speed agents can attack?</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>The Topics To Prioritize First</h3>
+
+          <p>Start with the topics that unlock the most judgment:</p>
+
+          <ol>
+            <li>Agent identity versus user identity</li>
+            <li>Least agency</li>
+            <li>Blast radius modeling</li>
+            <li>Direct and indirect prompt injection</li>
+            <li>Tool access control</li>
+            <li>Short-lived credentials</li>
+            <li>mTLS and certificate lifecycle</li>
+            <li>RBAC versus ABAC</li>
+            <li>JIT/JEA access</li>
+            <li>Sandboxing and runtime isolation</li>
+            <li>OpenTelemetry and distributed tracing</li>
+            <li>Immutable audit logs</li>
+            <li>Provenance and decision replay</li>
+            <li>Memory poisoning</li>
+            <li>Agent-assisted SOAR</li>
+            <li>AI-BOM and supply chain risk</li>
+            <li>Continuous authorization</li>
+            <li>Remote attestation</li>
+            <li>Confidential computing</li>
+            <li>Residual risk acceptance</li>
+          </ol>
+
+          <h3>How To Use AI During The Review</h3>
+
+          <p>AI is most useful when it is treated as a review partner, not as a decision maker. Ask it to challenge assumptions, enumerate attack paths, map controls to failure modes, create threat models, draft test cases, and identify missing evidence.</p>
+
+          <p>Then challenge its output. Ask what would bypass each control. Ask which assumptions are unproven. Ask what must be enforced outside the model. Ask what logs would prove the control worked. Ask what risk remains if the control fails.</p>
+
+          <p>The best review conversations are not one prompt and one answer. They are a loop:</p>
+
+          <ol>
+            <li>Describe the architecture.</li>
+            <li>Ask AI to identify risks and missing controls.</li>
+            <li>Ask AI to map each risk to an attack path.</li>
+            <li>Ask which control actually breaks the attack chain.</li>
+            <li>Review the answer like a security architect, not like a reader.</li>
+            <li>Document the residual risk and the evidence needed for approval.</li>
+          </ol>
+
+          <h3>The Judgment Level To Aim For</h3>
+
+          <p>If you build depth in these areas, you should be able to look at an AI agent architecture and say:</p>
+
+          <blockquote>
+            <p>This is safe enough for internal use.</p>
+          </blockquote>
+
+          <blockquote>
+            <p>This is not ready for production.</p>
+          </blockquote>
+
+          <blockquote>
+            <p>This needs Enterprise controls.</p>
+          </blockquote>
+
+          <blockquote>
+            <p>This requires Advanced controls.</p>
+          </blockquote>
+
+          <blockquote>
+            <p>This risk is technical. This risk is business-owned.</p>
+          </blockquote>
+
+          <blockquote>
+            <p>This control actually blocks the attack. This control only makes the attack tedious.</p>
+          </blockquote>
+
+          <p>That is the level you are trying to build. AI can accelerate the review, but your judgment decides whether the system is safe enough to ship.</p>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <span>Devlino</span>
+      <span>Cyber security, AI automation, and curious systems</span>
+    </footer>
+  </div>
+</body>
+</html>

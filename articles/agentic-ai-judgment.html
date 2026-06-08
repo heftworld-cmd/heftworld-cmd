@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="The value is in turning documents into judgment, architecture, controls, and decisions.">
-  <meta name="theme-color" content="#f4f4f2">
+  <meta name="theme-color" content="#fbf7ed">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none';">
-  <link rel="icon" href="../assets/devlino-logo.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/profile.png" type="image/png">
   <link rel="stylesheet" href="../assets/article-page.css">
   <title>From Reading AI Papers To Building Judgment: What Anthropic's Zero Trust For AI Agents Taught Me | Devlino</title>
 </head>
@@ -163,218 +163,110 @@
 
           <p>Not every system needs the same level of control. A small internal assistant does not need the same architecture as a regulated financial agent that can trigger production workflows.</p>
 
-          <p>The three levels are useful:</p>
+          <p>The three levels are useful because they show how agent security matures from a minimum viable baseline into continuously provable trust.</p>
+
+          <h4>Tier Progression Summary</h4>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Foundation</th>
+                  <th>Enterprise</th>
+                  <th>Advanced</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Agent identity</td>
+                  <td>Cryptographic agent IDs</td>
+                  <td>X.509 certificates with lifecycle management</td>
+                  <td>HSM/TPM-backed identity with remote attestation</td>
+                </tr>
+                <tr>
+                  <td>Service authentication</td>
+                  <td>Short-lived IdP-issued tokens</td>
+                  <td>mTLS with certificate pinning</td>
+                  <td>Hardware-bound credentials with attested issuance</td>
+                </tr>
+                <tr>
+                  <td>Authorization</td>
+                  <td>Deny-by-default RBAC</td>
+                  <td>ABAC with context-aware policies</td>
+                  <td>Continuous authorization at every action</td>
+                </tr>
+                <tr>
+                  <td>Privilege</td>
+                  <td>Static least-privilege roles</td>
+                  <td>Dynamic task-based elevation</td>
+                  <td>JIT/JEA with automatic expiration</td>
+                </tr>
+                <tr>
+                  <td>Runtime boundary</td>
+                  <td>Identity isolation plus network segmentation</td>
+                  <td>Per-agent sandboxed containers</td>
+                  <td>MicroVM / confidential computing isolation</td>
+                </tr>
+                <tr>
+                  <td>Logging</td>
+                  <td>Comprehensive action logs</td>
+                  <td>Immutable audit trails</td>
+                  <td>Real-time SIEM correlation</td>
+                </tr>
+                <tr>
+                  <td>Traceability</td>
+                  <td>Request IDs through action chain</td>
+                  <td>Distributed tracing across agents</td>
+                  <td>Full provenance and replay</td>
+                </tr>
+                <tr>
+                  <td>Behavior monitoring</td>
+                  <td>Manual expected behavior baselines</td>
+                  <td>Automated statistical baselines</td>
+                  <td>Continuous drift detection and ML behavior analysis</td>
+                </tr>
+                <tr>
+                  <td>Response</td>
+                  <td>Alerting plus model-drafted triage</td>
+                  <td>Automated containment and revocation</td>
+                  <td>Orchestrated Agentic SOAR with graduated escalation</td>
+                </tr>
+                <tr>
+                  <td>Input controls</td>
+                  <td>Schema, length, malformed input checks</td>
+                  <td>Known attack pattern filtering</td>
+                  <td>Multi-layer validation, classifiers, spotlighting</td>
+                </tr>
+                <tr>
+                  <td>Output controls</td>
+                  <td>Sensitive pattern redaction</td>
+                  <td>Semantic output analysis</td>
+                  <td>Human approval for high-risk actions</td>
+                </tr>
+                <tr>
+                  <td>Integrity</td>
+                  <td>Version-controlled configs</td>
+                  <td>Signed configs and deployment verification</td>
+                  <td>Immutable attested infrastructure</td>
+                </tr>
+                <tr>
+                  <td>Recovery</td>
+                  <td>Documented rollback</td>
+                  <td>Automated rollback with health checks</td>
+                  <td>Self-healing remediation</td>
+                </tr>
+                <tr>
+                  <td>Governance</td>
+                  <td>Acceptable use and agent IR policies</td>
+                  <td>Formal AI governance framework</td>
+                  <td>Continuous policy enforcement and compliance checking</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-          <h4>Foundation</h4>
-
-          <p>Foundation is the minimum viable Zero Trust baseline.</p>
-
-          <p>This includes:</p>
-
-          <ul>
-            <li>Unique cryptographic identity for every agent.</li>
-            <li>Short-lived tokens from an identity provider.</li>
-            <li>Deny-by-default RBAC.</li>
-            <li>Static least-privilege roles.</li>
-            <li>Basic input validation.</li>
-            <li>Sensitive output filtering.</li>
-            <li>Comprehensive action logs.</li>
-            <li>Request IDs across the workflow.</li>
-            <li>Version-controlled configurations.</li>
-            <li>Documented rollback and incident response.</li>
-          </ul>
-
-          <p>Foundation is not weak. It is the floor.</p>
-
-          <h4>Enterprise</h4>
-
-          <p>Enterprise is where most production organizations should aim.</p>
-
-          <p>This includes:</p>
-
-          <ul>
-            <li>X.509 certificate-based agent identity.</li>
-            <li>mTLS between agents, tools, services, and gateways.</li>
-            <li>ABAC policies using context such as data sensitivity, task purpose, user identity, environment, and risk score.</li>
-            <li>Dynamic privilege adjustment.</li>
-            <li>Sandboxed execution per agent.</li>
-            <li>Immutable audit logs.</li>
-            <li>Distributed tracing with OpenTelemetry.</li>
-            <li>Automated baseline learning.</li>
-            <li>Statistical anomaly detection.</li>
-            <li>Automated containment and access revocation.</li>
-            <li>Signed configurations.</li>
-            <li>Automated rollback.</li>
-            <li>Formal AI governance.</li>
-          </ul>
-
-          <p>Enterprise controls move the discussion from "we told the agent not to do that" to "the system cannot do that without authorization."</p>
-
-          <h4>Advanced</h4>
-
-          <p>Advanced is for high-assurance environments: regulated industries, national security, critical infrastructure, high-value financial workflows, or systems where compromise would be severe.</p>
-
-          <p>This includes:</p>
-
-          <ul>
-            <li>HSM or TPM-backed identity.</li>
-            <li>Remote attestation.</li>
-            <li>Hardware-bound credentials.</li>
-            <li>Confidential computing or microVM isolation.</li>
-            <li>Continuous authorization.</li>
-            <li>JIT and JEA access.</li>
-            <li>Full provenance from input to output.</li>
-            <li>Replayable decision history.</li>
-            <li>ML-based behavior analytics.</li>
-            <li>Drift detection.</li>
-            <li>Agentic SOAR.</li>
-            <li>Self-healing remediation.</li>
-            <li>Continuous compliance enforcement.</li>
-          </ul>
-
-          <p>Advanced is not about adding more checkboxes. It is about continuously proving that the system is still trustworthy.</p>
-
-          <h3>The Power Of Artifacts From A Single Prompt</h3>
-
-          <p>The most practical lesson from this exercise was how quickly agents can turn a paper into artifacts.</p>
-
-          <p>From one discussion, we generated:</p>
-
-          <ul>
-            <li>Three reference architectures: Foundation, Enterprise, and Advanced.</li>
-            <li>Control checklists.</li>
-            <li>Architecture review questionnaires.</li>
-            <li>Threat model templates.</li>
-            <li>Maturity scorecards.</li>
-            <li>Remediation backlog templates.</li>
-            <li>Sample review reports.</li>
-          </ul>
-
-          <p>That is the real shift.</p>
-
-          <p>A paper is passive.</p>
-
-          <p>An artifact is usable.</p>
-
-          <p>An architecture diagram can be reviewed.</p>
-
-          <p>A checklist can be applied.</p>
-
-          <p>A maturity scorecard can drive a decision.</p>
-
-          <p>A remediation backlog can become engineering work.</p>
-
-          <p>A sample review report can become a repeatable consulting or internal governance process.</p>
-
-          <p>This is how professionals should use AI agents: not just to summarize knowledge, but to convert knowledge into reusable systems.</p>
-
-          <h3>What Skills Are Needed Now?</h3>
-
-          <p>To stay relevant in this agentic future, the required skills are not only technical. They are judgment-oriented.</p>
-
-          <p>You need to understand:</p>
-
-          <h4>Agentic AI Fundamentals</h4>
-
-          <p>Tool calling, MCP, RAG, memory, multi-agent workflows, agent identity, delegation, context windows, and autonomous execution.</p>
-
-          <h4>Zero Trust Architecture</h4>
-
-          <p>Identity, least privilege, least agency, mTLS, short-lived tokens, RBAC, ABAC, JIT/JEA, policy enforcement, segmentation, and workload identity.</p>
-
-          <h4>Threat Modeling</h4>
-
-          <p>Assets, trust boundaries, data flows, abuse cases, attack paths, blast radius, prompt injection, tool poisoning, memory poisoning, and identity abuse.</p>
-
-          <h4>Security Control Design</h4>
-
-          <p>Not "add monitoring" as a vague statement. You need to know which control breaks which attack chain: sandboxing, allowlists, token scoping, output filtering, DLP, provenance, audit logs, signed configs, rollback, and containment.</p>
-
-          <h4>Cloud And Enterprise Architecture</h4>
-
-          <p>AWS, Azure, GCP, Kubernetes, IAM, networking, APIs, secrets management, CI/CD, observability, and enterprise data platforms.</p>
-
-          <h4>Observability And Incident Response</h4>
-
-          <p>What logs are needed, what traces prove, what SIEM/SOAR can automate, what alerts matter, and how to contain a compromised agent.</p>
-
-          <h4>Governance And Risk Language</h4>
-
-          <p>This is where senior professionals separate themselves. You need to translate technical gaps into business risk: compliance exposure, customer impact, auditability, operational blast radius, and compensating controls.</p>
-
-          <h4>Communication</h4>
-
-          <p>Your value is not only finding problems. It is explaining them so engineering, security, legal, compliance, and leadership can act.</p>
-
-          <h3>How To Build This Judgment</h3>
-
-          <p>The path is simple, but not easy.</p>
-
-          <p>First, learn the concepts.</p>
-
-          <p>Then practice again and again on architectures.</p>
-
-          <p>Use this loop:</p>
-
-          <ol>
-            <li>Take one AI agent use case.</li>
-            <li>Draw the architecture.</li>
-            <li>Ask an agent to review it.</li>
-            <li>Review the agent's review.</li>
-            <li>Create a control matrix.</li>
-            <li>Red-team the architecture.</li>
-            <li>Decide whether it is Foundation, Enterprise, or Advanced.</li>
-            <li>Write the residual risk statement.</li>
-          </ol>
-
-          <p>Do this 20 times.</p>
-
-          <p>Use different examples:</p>
-
-          <ul>
-            <li>SOC investigation agent.</li>
-            <li>HR onboarding agent.</li>
-            <li>Customer support agent.</li>
-            <li>Finance reconciliation agent.</li>
-            <li>Code review agent.</li>
-            <li>Cloud operations agent.</li>
-            <li>Legal contract review agent.</li>
-            <li>Data analytics agent.</li>
-            <li>Procurement agent.</li>
-            <li>Incident response agent.</li>
-          </ul>
-
-          <p>After enough repetitions, your mind starts to see patterns.</p>
-
-          <p>You begin to notice over-broad tools, weak identities, missing traceability, unsafe memory, unbounded data access, vague human approval, and controls that only add friction instead of preventing damage.</p>
-
-          <p>That is how judgment develops.</p>
-
-          <h3>Learn Concepts First, Then Practice Again And Again</h3>
-
-          <p>The biggest takeaway from this discussion is simple:</p>
-
-          <blockquote>
-            <p>Learn the concepts first. Then practice again and again on architectures.</p>
-          </blockquote>
-
-          <p>Do not try to compete with agents at speed-reading papers.</p>
-
-          <p>Use agents to accelerate understanding.</p>
-
-          <p>Use agents to generate drafts, diagrams, questions, controls, and reports.</p>
-
-          <p>But do not surrender accountability to them.</p>
-
-          <p>The future belongs to people who can supervise agents, challenge agents, and make decisions from agent-generated work.</p>
-
-          <p>That is the new professional edge.</p>
-
-          <p>The winning skill is calibrated skepticism:</p>
-
-          <blockquote>
-            <p>Use agents aggressively, but never outsource judgment.</p>
-          </blockquote>
+          <p>Foundation is not weak; it is the floor. Enterprise is where most production organizations should aim. Advanced is for high-assurance environments where the system must continuously prove that it is still trustworthy.</p>
         </div>
       </article>
     </main>
